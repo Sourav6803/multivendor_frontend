@@ -18,7 +18,7 @@ const ShopCreate = () => {
     const [visible, setVisible] = useState("")
     const [name, setName] = useState("")
 
-    console.log("zipcccc",zipCode)
+    
     const navigate = useNavigate()
 
     const handleFileinputChange = (e) => {
