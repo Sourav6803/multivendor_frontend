@@ -6,7 +6,8 @@ import { MdOutlineTrackChanges, MdTrackChanges } from 'react-icons/md'
 import styles from '../../styles/styles';
 import { Link } from 'react-router-dom'
 import { DataGrid } from "@material-ui/data-grid";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
+import Button from '@mui/material/Button'
 import { deleteUserAddress, updatUserAddress, updateUserInformation } from '../../redux/actions/user';
 import { toast } from 'react-toastify';
 import axios from 'axios';

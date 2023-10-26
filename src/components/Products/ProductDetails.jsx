@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { productData } from '../../static/data'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from '../../styles/styles'
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai'
+import { AiFillHeart, AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai'
 import { backend_url, server } from '../../server'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProductsShop } from "../../redux/actions/product";

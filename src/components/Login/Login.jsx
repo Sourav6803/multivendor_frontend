@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../server';
 import { toast } from 'react-toastify';
-import loginImg from "../../Assests/login.jpg"
+
 
 const Login = () => {
     const [email, setEmail] = useState("")

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import styles from '../../styles/styles';
 import { Link } from 'react-router-dom';
-import { categoriesData, productData } from "../../static/data"
+import { categoriesData } from "../../static/data"
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from 'react-icons/bi';

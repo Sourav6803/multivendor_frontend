@@ -60,7 +60,7 @@ const OrderDetails = () => {
             });
     }
 
-    console.log(data?.status);
+  
 
 
     return (
