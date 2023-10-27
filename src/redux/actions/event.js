@@ -101,12 +101,12 @@ export const getAllEvents = () => async (dispatch) => {
     const { data } = await axios.get(`${server}/event/get-all-events`);
     dispatch({
       type: "getAlleventsSuccess",
-      payload: data.events,
+      payload: data?.events,
     });
   } catch (error) {
     dispatch({
       type: "getAlleventsFailed",
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
