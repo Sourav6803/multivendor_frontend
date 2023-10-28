@@ -71,7 +71,7 @@ const Header = ({ activeHeading }) => {
                                         return (
                                             <Link to={`/product/${i?._id}`}>
                                                 <div key={index} className='w-full flex items-start py-3'>
-                                                    <img src={`${backend_url}${i.images[0]}`} alt='img' className='w-[40px] h-[40px] mr-[10px]' />
+                                                    <img src={`${i.images[0]}`} alt='img' className='w-[40px] h-[40px] mr-[10px]' />
                                                     <h1>{i?.name}</h1>
                                                 </div>
 
@@ -135,7 +135,7 @@ const Header = ({ activeHeading }) => {
                                 {
                                     isAuthenticated ? (
                                         <Link to="/profile">
-                                            <img src={`${backend_url}${user?.avatar}`} alt='' className='w-[35px] h-[35px] rounded-full' />
+                                            <img src={`${user?.avatar}`} alt='' className='w-[35px] h-[35px] rounded-full' />
 
                                         </Link>
                                     ) : (
@@ -228,7 +228,7 @@ const Header = ({ activeHeading }) => {
                                                     return (
                                                         <Link to={`/product/${Product_Name}`}>
                                                             <div key={index} className='w-full flex items-start py-3'>
-                                                                <img src={i.image_Url[0].url} alt='img' className='w-[50px]  mr-2' />
+                                                                <img src={i.image_Url[0]} alt='img' className='w-[50px]  mr-2' />
                                                                 <h5>{i.name}</h5>
                                                             </div>
 
@@ -256,7 +256,7 @@ const Header = ({ activeHeading }) => {
                                         isAuthenticated ? (
                                             <div>
                                                 <Link to="/profile">
-                                                    <img src={`${backend_url}${user.avatar}`} alt='' className='w-[60px] h-[60px] rounded-full border-[3px] border-[#33a466] ' />
+                                                    <img src={`${user?.avatar}`} alt='' className='w-[60px] h-[60px] rounded-full border-[3px] border-[#33a466] ' />
                                                 </Link>
                                             </div>
                                         ) : (

@@ -14,6 +14,7 @@ import { addTocart } from '../../../redux/actions/cart';
 import Ratings from '../../Products/Ratings';
 
 
+
 const ProductCard = ({ data, isEvent }) => {
     const [click, setClick] = useState(false)
     const [open, setOpen] = useState(false)
@@ -56,6 +57,8 @@ const ProductCard = ({ data, isEvent }) => {
         }
     };
 
+    
+
     const discountPercentage = Math.ceil(((data?.originalPrice - data?.discountPrice) / data?.originalPrice) * 100)
 
 
@@ -65,7 +68,7 @@ const ProductCard = ({ data, isEvent }) => {
             <div className='flex justify-end'></div>
 
             <Link to={`${isEvent === true ? `/product/${data?._id}?isEvent=true` : `/product/${data?._id}`}`}>
-                <img src={`${backend_url}${data?.images[0]}` ? `${backend_url}${data?.images[0]}` : ""} alt='' className='w-full h-[160px] object-contain' />
+                <img src={ `${data?.images && data?.images[0]}`} alt='' className='w-full h-[160px] object-contain' />
             </Link>
             <Link to={`/shop/preview/${data.shop._id}`}>
                 <h5 className={`${styles.shop_name}`}>{data?.shop?.name}</h5>

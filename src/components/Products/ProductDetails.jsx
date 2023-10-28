@@ -119,12 +119,12 @@ const ProductDetails = ({ data }) => {
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
                                 <div className='w-full 800px:w-[50%]'>
-                                    <img src={`${backend_url}${data && data.images[select]}`} alt='' className='w-[80%] h-[500px]' />
+                                    <img src={`${data && data.images[select]}`} alt='' className='w-[80%] h-[500px]' />
                                     <div className='w-full flex flex-wrap'>
                                         {
                                             data && data?.images?.map((i, index) => (
                                                 <div className={`${select === 0 ? "border" : "null"} cursor-pointer`}>
-                                                    <img src={`${backend_url}${i}`} alt='' className='h-[100px] overflow-hidden mr-3 mt-3' onClick={() => setSelect(index)} />
+                                                    <img src={`${i}`} alt='' className='h-[100px] overflow-hidden mr-3 mt-3' onClick={() => setSelect(index)} />
 
                                                 </div>
 
@@ -200,7 +200,7 @@ const ProductDetails = ({ data }) => {
 
                                     <div className=' mt-3 flex mr-3'>
                                         <CiLocationOn size={20} />
-                                        <p className='ml-3'> Deliver to {user?.name} - {user?.addresses[0].address1} {user?.addresses[0]?.zipCode}</p>
+                                        <p className='ml-3'> Deliver to {user?.name} - {user?.addresses[0]?.address1} {user?.addresses[0]?.zipCode}</p>
                                     </div>
 
                                     <div className='mt-3 flex'>
@@ -292,7 +292,7 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
                         data?.reviews?.map((item, index) => (
                             <div className="w-full flex my-2">
                                 <img
-                                    src={`${backend_url}${item?.user.avatar}`}
+                                    src={`${item?.user.avatar}`}
                                     alt=""
                                     className="w-[50px] h-[50px] rounded-full"
                                 />
@@ -314,13 +314,16 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
                 </div>
             ) : null}
 
+            {console.log(data.shop)}
+
             {
                 active === 3 && (
                     <div className='w-full block 800px:flex p-5'>
                         <div className='w-full  800px:w-[50%]'>
                             <Link to={`/shop/preview/${data?.shop?._id}`}>
                                 <div className='flex items-center'>
-                                    <img src={`${backend_url}${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full ' />
+                                    <img src={`${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full ' />
+                                    
                                     <div className='pl-3'>
                                         <h3 className={`${styles.shop_name}`}>{data?.shop?.name}</h3>
                                         <h5 className='pb-2 text-[15px]'>({averageRating}/5) Ratings</h5>
