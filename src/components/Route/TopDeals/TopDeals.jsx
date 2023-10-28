@@ -28,7 +28,7 @@ const TopDeals = () => {
 
   return (
     <div>
-      <div className={`${styles.section} border-red-800`} >
+      <div className={`${styles.section} border-red-800`} style={{backgroundImage: "https://media.istockphoto.com/id/1180447175/vector/rangoli-dark-red-maroon-colored-grunge-background-diwali-greeting-with-one-small-diya-at-the.jpg?s=2048x2048&w=is&k=20&c=f7wcjVwr8LK45i26-wI7TuHTVeUEylfDN36IXhqq5fM="}}>
         <div className={`${styles.heading}`}>
           <h1>Top Deals</h1>
         </div>
