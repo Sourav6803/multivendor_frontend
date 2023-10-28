@@ -32,7 +32,7 @@ const TopDeals = () => {
         <div className={`${styles.heading}`}>
           <h1>Top Deals</h1>
         </div>
-        <div className="border-gray-800 grid grid-cols-2 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 border-0"  >
+        <div className="border-gray-800 grid grid-cols-2 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 border-0 m-2"  >
           {
             data && data.length !== 0 && (
               <>
