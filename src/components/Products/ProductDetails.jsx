@@ -213,7 +213,7 @@ const ProductDetails = ({ data }) => {
                                     </div>
 
                                     <div className='flex items-center pt-8'>
-                                        <img src={`${backend_url}${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full mr-2 ' />
+                                        <img src={`${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full mr-2 ' />
                                         <div className='pr-8'>
                                             <Link to={`/shop/preview/${data?.shop._id}`}>
                                                 <h3 className={`${styles.shop_name} pb-1 pt-1`}>
