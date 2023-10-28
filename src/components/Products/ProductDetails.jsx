@@ -119,7 +119,7 @@ const ProductDetails = ({ data }) => {
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
                                 <div className='w-full 800px:w-[50%]'>
-                                    <img src={`${data && data.images[select]}`} alt='' className='w-[80%] h-[400px]' />
+                                    <img src={`${data && data.images[select]}`} alt='' className='w-[90%] h-[350px]' />
                                     <div className='w-full flex flex-wrap'>
                                         {
                                             data && data?.images?.map((i, index) => (
