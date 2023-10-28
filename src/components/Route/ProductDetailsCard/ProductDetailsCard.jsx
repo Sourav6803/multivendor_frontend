@@ -95,7 +95,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   <Link to={`/shop/preview/${data.shop._id}`} className="flex">
                     <img
                     //   src={`${data.shop.images && data.shop.images[0]?.url}`}
-                    src={`${backend_url}${data.shop.avatar} `}
+                    src={`${data.shop.avatar} `}
                       alt=""
                       className="w-[50px] h-[50px] rounded-full mr-2 mt-3"
                     />
