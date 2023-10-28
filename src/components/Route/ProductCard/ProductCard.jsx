@@ -74,22 +74,14 @@ const ProductCard = ({ data, isEvent }) => {
                 <h5 className={`${styles.shop_name}`}>{data?.shop?.name}</h5>
             </Link>
             <Link to={`/product/${data?._id}`}>
-                <h4 className='pb-2 font-[500]'>
-                    {data?.name?.length > 40 ? data?.name?.slice(0, 20) + "..." : data.name}
-                </h4>
-
-                <div className='flex'>
-                    <Ratings rating={data?.ratings} />
-                </div>
-
                 <div className='py-2 flex items-center justify-between'>
                     <div className='flex'>
                         <h5 className={`${styles.productDiscountPrice}`}>
                             ₹{data.originalPrice === 0 ? data?.originalPrice : data?.discountPrice}
                         </h5>
-                        <h4 className={`${styles.price}`}>
+                        <p className={`${styles.price}`}>
                             ₹{data.originalPrice ? data.originalPrice : null}
-                        </h4>
+                        </p>
                     </div>
                     <span className='font-[600] text-[17px] text-[#267c3d]'>
                         {data.sold_out} sold
@@ -97,7 +89,11 @@ const ProductCard = ({ data, isEvent }) => {
 
                 </div>
                 <div className='mb-1 text-green-700'>
-                    <h5> {discountPercentage}% off</h5>
+                    <p> {discountPercentage}% off</p>
+                </div>
+
+                <div className='flex'>
+                    <Ratings rating={data?.ratings} />
                 </div>
             </Link>
 
