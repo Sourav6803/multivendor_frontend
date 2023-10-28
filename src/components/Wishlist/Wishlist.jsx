@@ -94,7 +94,7 @@ import { removeFromWishlist } from "../../redux/actions/wishlist";
 import { addTocart } from "../../redux/actions/cart";
 import { backend_url } from "../../server";
 import { toast } from "react-toastify";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
+
 
 
 const Wishlist = ({ setOpenWishlist }) => {
@@ -139,7 +139,7 @@ const Wishlist = ({ setOpenWishlist }) => {
               <div className={`${styles.noramlFlex} p-4`}>
                 <AiOutlineHeart size={25} />
                 <h5 className="pl-2 text-[20px] font-[500]">
-                  {wishlist && wishlist.length} items
+                  {wishlist && wishlist?.length} items
                 </h5>
               </div>
 
@@ -170,7 +170,7 @@ const CartSingle = ({ data,removeFromWishlistHandler,addToCartHandler }) => {
         onClick={() => removeFromWishlistHandler(data)}
         />
         <img
-          src={`${backend_url}${data.images[0]}`}
+          src={`${data.images[0]}`}
           alt=""
           className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
         />
