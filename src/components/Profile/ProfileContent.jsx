@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { backend_url, server } from '../../server';
+import { server } from '../../server';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineArrowRight, AiOutlineCamera, AiOutlineDelete } from 'react-icons/ai';
-import { MdOutlineTrackChanges, MdTrackChanges } from 'react-icons/md'
+import {  MdTrackChanges } from 'react-icons/md'
 import styles from '../../styles/styles';
 import { Link } from 'react-router-dom'
 import { DataGrid } from "@material-ui/data-grid";
