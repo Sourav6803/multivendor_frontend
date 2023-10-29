@@ -9,12 +9,14 @@ const Categories = () => {
     const navigate = useNavigate()
     return (
         <>
-            <div className={`${styles.section} hidden `}>
+            <div className={`${styles.section} sm:block `}>
                 <div className={`branding my-12 flex justify-between w-full shadow-sm bg-white p-5 rounded-md`}>
                     {
                         brandingData && brandingData.map((i, index) => (
-                            <div className='flex items-start' key={index}>
-                                {i.icon}
+                            <div className='flex items-start justify-content-center flex-wrap' key={index}>
+                                <div className='flex  pl-5'>
+                                    {i.icon}
+                                </div>
                                 <div className='px-3'>
                                     <h3 className='font-bold text-sm md:text-base'>
                                         {i.title}
