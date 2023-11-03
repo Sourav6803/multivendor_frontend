@@ -213,7 +213,7 @@ const ProductDetails = ({ data }) => {
                                     </div>
 
                                     <div className='flex items-center pt-8'>
-                                        <img src={`${backend_url}${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full mr-2 ' />
+                                        <img src={`${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full mr-2 ' />
                                         <div className='pr-8'>
                                             <Link to={`/shop/preview/${data?.shop._id}`}>
                                                 <h3 className={`${styles.shop_name} pb-1 pt-1`}>
@@ -223,9 +223,11 @@ const ProductDetails = ({ data }) => {
 
                                             <h5 className='pb-3 text-[15px] '>({averageRating}/5)Ratings</h5>
                                         </div>
-                                        <div className={`${styles.button} bg-[#6443d1] !mt-4 !rounded h-11`} onClick={handleMessageSubmit}>
+                                        <Link to={`/shop/preview/${data?.shop._id}`} >
+                                            <div className={`${styles.button} bg-[#6443d1] !mt-4 !rounded h-11`} onClick={handleMessageSubmit}>
                                             <span className='text-white flex items-center'>Send Message <AiOutlineMessage className='ml-1' /></span>
                                         </div>
+                                        </Link>
                                     </div>
                                 </div>
 
