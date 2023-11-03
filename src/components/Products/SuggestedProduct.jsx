@@ -10,14 +10,14 @@ const SuggestedProduct = ({data}) => {
     const [productData,setProductData] = useState()
 
     useEffect(()=>{
-        const d = allProducts && allProducts?.filter((i)=> i.category === data.category)
+        const d = allProducts && allProducts?.filter((i)=> i.category === data.category || i.name === data.name || i.tags === data.tags)
         setProductData(d)
     },[])
   return (
     <div>
         {
             data ? (
-                <div className={`p-4 ${styles.section}`}>
+                <div className={`p-4 ${styles.section}`} style={{backgroundImage: "https://media.istockphoto.com/id/1180447175/vector/rangoli-dark-red-maroon-colored-grunge-background-diwali-greeting-with-one-small-diya-at-the.jpg?s=2048x2048&w=is&k=20&c=f7wcjVwr8LK45i26-wI7TuHTVeUEylfDN36IXhqq5fM=" , backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
                     <h2 className={`${styles.heading} text-[25px] font-[500] border-b mb-5 `}>
                         Related Product
                     </h2>

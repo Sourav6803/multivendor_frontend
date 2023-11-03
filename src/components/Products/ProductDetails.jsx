@@ -118,12 +118,12 @@ const ProductDetails = ({ data }) => {
                     <div className={`${styles.section} w-[90%] 80px:w-[80%] `}>
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
-                                <div className='w-full 800px:w-[50%]'>
-                                    <img src={`${data && data.images[select]}`} alt='' className='w-[80%] h-[500px]' />
-                                    <div className='w-full flex flex-wrap'>
+                                <div className='w-full 800px:w-[50%] '>
+                                    <img src={`${data && data.images[select]}`} alt='' className='w-full h-[370px] md:h-[500px] object-cover' />
+                                    <div className='w-full flex flex-wrap ml-2'>
                                         {
                                             data && data?.images?.map((i, index) => (
-                                                <div className={`${select === 0 ? "border" : "null"} cursor-pointer`}>
+                                                <div className={`${select === 0 ? "border" : "null"} cursor-pointer`} key={index}>
                                                     <img src={`${i}`} alt='' className='h-[100px] overflow-hidden mr-3 mt-3' onClick={() => setSelect(index)} />
 
                                                 </div>
@@ -134,26 +134,26 @@ const ProductDetails = ({ data }) => {
 
                                 </div>
 
-                                <div className='w-full 800px:w-[50%]'>
-                                    <h1 className={`${styles.productTitle} mt-3`}>{data.name}</h1>
+                                <div className='w-full 800px:w-[50%] ml-1'>
+                                    <h1 className={`${styles.productTitle} mt-3 !text-[14px]`}>{data.name}</h1>
 
 
-                                    <h3 className={`${styles.shop_name} pb-1 pt-1`}>
+                                    <h3 className={`${styles.shop_name} pb-1 pt-1 `}>
                                         <span className='text-black'>Seller:</span> <Link to={`/shop/preview/${data?.shop._id}`}>{data?.shop?.name}</Link>
                                     </h3>
 
 
                                     {/* <p className='mt-3'>{data?.description}</p> */}
-                                    <div className='flex pt-3'>
-                                        <h4 className={`${styles.productDiscountPrice} mt-3`}>₹{data.discountPrice}</h4>
-                                        <h3 className={`${styles.price} !mt-3 `}>
+                                    <div className='flex pt-1'>
+                                        <h4 className={`${styles.productDiscountPrice} mt-1`}>₹{data.discountPrice}</h4>
+                                        <h3 className={`${styles.price} !mt-1 `}>
                                             ₹{data?.originalPrice ? data?.originalPrice : null}
                                         </h3>
-                                        <h3 className='m-3  font-bold text-green-800'>{discPercentage ? discPercentage : data?.discountPercentage}% off</h3>
+                                        <h3 className='mt-1 ml-3 font-bold text-green-800'>{discPercentage ? discPercentage : data?.discountPercentage}% off</h3>
                                     </div>
 
 
-                                    <div className='flex items-center mt-12 justify-between pr-3'>
+                                    <div className='flex items-center mt-2 justify-between pr-3'>
                                         <div>
                                             <button className='bg-gradient-to-r from-teal-500 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out' onClick={decreamentCount}>-</button>
                                             <span className='bg-gray-200 text-gray-800 font-medium px-4 py-[9px]'>{count}</span>
@@ -167,32 +167,32 @@ const ProductDetails = ({ data }) => {
                                         </div> */}
 
                                         {
-                                            click ? <div className={`${styles.button} !mt-6  !rounded !h-11 flex items-center`} onClick={() => removeFromWishlistHandler(data)} title='Remove from wishlist' >
+                                            click ? <div className={`${styles.button} !mt-3  !rounded !h-11 flex items-center`} onClick={() => removeFromWishlistHandler(data)} title='Remove from wishlist' >
                                                 <span className='text-[#fff] flex items-center'> <AiFillHeart size={20} color={click ? "red" : "#333"} className='mr-3' /> WISHLIST </span>
                                             </div> :
-                                                <div className={`${styles.button} !mt-6  !rounded !h-11 flex items-center`} onClick={() => addToWishlistHandler(data)} title='Add to wishlist' >
+                                                <div className={`${styles.button} !mt-3  !rounded !h-11 flex items-center`} onClick={() => addToWishlistHandler(data)} title='Add to wishlist' >
                                                     <span className='text-[#fff] flex items-center'> <AiFillHeart size={20} color={click ? "red" : "#333"} className='mr-3' /> WISHLIST </span>
                                                 </div>
                                         }
 
-                                        <div className={`${styles.button} !mt-6 !rounded !h-11 flex items-center ml-3`} onClick={() => addToCartHandler(data?._id)}>
+                                        <div className={`${styles.button} !mt-3 !rounded !h-11 flex items-center ml-3`} onClick={() => addToCartHandler(data?._id)}>
                                             <span className='text-[#fff] flex items-center'>Add to Cart <AiOutlineShoppingCart className='ml-1' /></span>
                                         </div>
                                     </div>
 
-                                    <div className='mt-2'>
+                                    <div className='mt-1'>
                                         {
                                             data && data.stock <= 9 ? <p className='text-red-500 font-semibold'>Hurry Up! Only few prodcts are left</p> : ""
                                         }
                                     </div>
 
                                     <div className='mt-3'>
-                                        <p className='flex'>
+                                        <h5 className='flex'>
                                             <TbTruckDelivery size={30} className='inline-block ms-3' />
                                             {
                                                 data.discountPrice >= 399 ? <p className='text-green-600  font-bold  ml-5'>FREE Delivery <span className='line-through text-black'>40</span></p> : <span className='flex mt-1 ml-3 '> <FaRupeeSign className='mt-1' /> 40</span>
                                             }
-                                        </p>
+                                        </h5>
                                         <p>Free shipping and Returns available on all orders!
                                             <br /> We Ship all us domestic orders within
                                             <b> 5-10 business days</b>{" "}</p>
@@ -279,7 +279,7 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
             {
                 active === 1 ? (
                     <>
-                        <p className='py-2 text-[18px] leading-8 pb-10 whitespace-pre-line '>
+                        <p className='py-2 text-[14px] leading-4 pb-10  '>
                             {data?.description}
                         </p>
                     </>
@@ -314,7 +314,7 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
                 </div>
             ) : null}
 
-            {console.log(data.shop)}
+            
 
             {
                 active === 3 && (

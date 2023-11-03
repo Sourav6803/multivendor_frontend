@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import styles from '../../styles/styles';
 import { Link } from 'react-router-dom';
 import { categoriesData } from "../../static/data"
@@ -64,7 +64,7 @@ const Header = ({ activeHeading }) => {
                         <AiOutlineSearch size={30} className='absolute right-2 top-1.5 cursor-pointer' />
 
                         {
-                            searchData && searchData.length > 1 ? (
+                            searchData && searchData.length !== 0 ? (
                                 <div className='absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4'>
                                     {searchData && searchData.map((i, index) => {
 
@@ -192,7 +192,9 @@ const Header = ({ activeHeading }) => {
                     {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
 
                     {/* wishlist popup */}
+                    
                     {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
+                    
                 </div>
 
                 {/* header sidebar */}
@@ -202,7 +204,7 @@ const Header = ({ activeHeading }) => {
                             <div className='fixed w-[60%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll'>
                                 <div className='w-full justify-between flex pr-3 '>
                                     <div>
-                                        <div className='relative mr-[15px] '>
+                                        <div className='relative mr-[15px] ' onClick={()=>setOpenWishlist(true)}>
                                             <AiOutlineHeart size={30} className='mt-5 ml-3' />
                                             <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                                                 {cart && cart?.length}
@@ -220,16 +222,18 @@ const Header = ({ activeHeading }) => {
                                     />
 
                                     {
-                                        searchData && searchData?.length > 1 ? (
+                                        searchData && searchData?.length !== 0 ? (
                                             <div className='absolute  bg-slate-50 shadow w-full z-10 left-0 p-3'>
-                                                {searchData && searchData.map((i, index) => {
-                                                    const d = i.name
+                                                {searchData && searchData?.map((i, index) => {
+
+                                                    const d = i?.name
+                                                    console.log(i._id)
                                                     const Product_Name = d.replace(/\s+/g, "-")
                                                     return (
-                                                        <Link to={`/product/${Product_Name}`}>
+                                                        <Link to={`/product/${i?._id}`}>
                                                             <div key={index} className='w-full flex items-start py-3'>
-                                                                <img src={i.image_Url[0]} alt='img' className='w-[50px]  mr-2' />
-                                                                <h5>{i.name}</h5>
+                                                                <img src={i?.images[0]} alt='img' className='w-[50px]  mr-2' />
+                                                                <h5>{i?.name}</h5>
                                                             </div>
 
                                                         </Link>
@@ -240,16 +244,17 @@ const Header = ({ activeHeading }) => {
                                     }
                                 </div>
                                 <Navbar active={activeHeading} />
+
                                 <div className={`${styles.button} ml-4 !rounded-[4px]`}>
-                                    <Link to='/shop-login'>
+                                    <Link to={`${isSeller ? "/dashboard" : '/shop-login'}`}>
                                         <h1 className='text-[#fff] flex items-center'>
-                                            Become Seller <IoIosArrowForward className='ml-1' />
+                                            {isSeller ? "Dashboard" : "Become Seller"}  <IoIosArrowForward className='ml-1' />
                                         </h1>
                                     </Link>
                                 </div>
                                 <br />
                                 <br />
-                                <br />
+
 
                                 <div className='flex w-full justify-center'>
                                     {
@@ -272,6 +277,8 @@ const Header = ({ activeHeading }) => {
                     )
                 }
             </div>
+
+
         </>
     )
 }

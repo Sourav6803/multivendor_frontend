@@ -12,7 +12,9 @@ const ProductDetailsPage = () => {
   const { id } = useParams()
   const [data, setData] = useState(null)
   const [searchParams] = useSearchParams()
-  const eventData = searchParams.get("isEvent")
+  const eventData = searchParams.get("isEvent") 
+  // console.log(eventData)
+  
 
   useEffect(() => {
     if (eventData !== null) {
@@ -23,14 +25,18 @@ const ProductDetailsPage = () => {
       setData(data)
     }
 
-  }, [allProducts, allEvents])
+  }, [allProducts, eventData])
+
+  // console.log(data)
+
+
   return (
     <div>
       <Header />
       <ProductDetails data={data} />
       {
         !eventData && (
-          data && <SuggestedProduct data={data} />
+          data && <SuggestedProduct data={data} eventData={eventData} />
         )
       }
       <Footer />

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "../../../styles/styles";
 import ProductCard from "../ProductCard/ProductCard.jsx"
-import { server } from "../../../server";
-import axios from "axios";
+
+
+
 
 
 
@@ -33,8 +34,9 @@ const NewArrival = () => {
 
 
   return (
-    <div>
+    <div className="mt-3 pb-1" style={{backgroundImage: "url('https://img.freepik.com/premium-photo/pastel-color-gradient-abstract-background_608068-581.jpg?w=996')" , backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
       <div className={`${styles.section}`}>
+      
         <div className={`${styles.heading}`}>
           <h1>New Arrivals</h1>
         </div>

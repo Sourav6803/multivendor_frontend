@@ -26,13 +26,13 @@ const CountDown = ({data}) => {
         return timeLeft;
       }
 
-    const timerComponents = Object.keys(timeLeft).map((interval) => {
+    const timerComponents = Object.keys(timeLeft).map((interval, index) => {
         if (!timeLeft[interval]) {
             return null;
         }
 
         return (
-            <span className="text-[25px] text-[#475ad2]">
+            <span className="text-[18px] text-[#475ad2]" key={index}>
                 {timeLeft[interval]} {interval}{" "}
             </span>
         );
@@ -42,7 +42,7 @@ const CountDown = ({data}) => {
 
     return (
         <div>
-            {timerComponents.length ? (timerComponents) : (<span className='text-[red] text-[25px]'>Time's up!</span>)}
+            {timerComponents.length ? (timerComponents) : (<span className='text-[red] text-[12px]'>Time's up!</span>)}
            
         </div>
     )

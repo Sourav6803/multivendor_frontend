@@ -241,10 +241,10 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
                 <img
                     src={`${data.images[0]}`}
                     alt=""
-                    className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+                    className="w-[70px] h-min ml-2 mr-2 rounded-[5px]"
                 />
                 <div className="pl-[5px]">
-                    <h1>{data?.name}</h1>
+                    <h1>{data?.name.length >= 21 ? data.name.slice(0,20)+ "... " : data?.name} </h1>
                     <h4 className="font-[400] text-[15px] text-[#00000082]">
                         ₹{data?.discountPrice} * {value}
                     </h4>
@@ -255,7 +255,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
                 <RxCross1
                     className="cursor-pointer"
                     onClick={() => removeFromCartHandler(data)}
-                    size={20}
+                    size={!20}
                     color="red"
                 />
             </div>
