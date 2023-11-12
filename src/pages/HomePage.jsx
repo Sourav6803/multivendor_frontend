@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "../components/Layout/Header"
 import Hero from '../components/Route/Hero/Hero';
 import Categories from '../components/Route/Categories/Categories';
@@ -15,11 +15,27 @@ import SingleBanner from '../components/Route/Hero/SIngleBannner';
 import Blog from '../components/Route/Blog/Blog';
 import TopBanner from '../components/Route/Banner/TopBanner';
 import CartProduct from '../components/Route/CartProduct/CartProduct';
-
-
+import { useSelector } from 'react-redux';
 
 
 const HomePage = () => {
+  const [data, setData] = useState([])
+  const { allProducts, isLoading } = useSelector((state) => state?.products)
+  const categoryData = "Canvas"
+
+  useEffect(() => {
+    if (categoryData === null) {
+        const d = allProducts
+        setData(d)
+    } else {
+        const d = allProducts && allProducts.filter((i) => i.subCategory === categoryData)
+        setData(d)
+    }
+    
+}, [allProducts])
+
+
+
   return (
     <div>
         <Header activeHeading={1}/>
@@ -28,13 +44,14 @@ const HomePage = () => {
         <Categories />
         <SingleBanner />
         <BestDeals />
-        <Slider />
+        <Slider  />
         <Events />
         <FeaturedProduct />
         <MidSection />
         <TopDeals />
         <CartProduct />
         <NewArrival />
+        <Slider data={data} />
         <Sponsored />
         <Blog />
         <Footer />

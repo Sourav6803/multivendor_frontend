@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   LoginPage, SignupPage, ActivationPage, HomePage, ProductsPage, BestSellingPage, EventsPage, FAQPages, TrackOrderPage,
   ProductDetailsPage, ProfilePage, ShopCreatePage, SellerActivationPage, ShopLoginPage, PaymentPage, OrderSuccessPage,
-  OrderDetailsPage, UserInbox
+  OrderDetailsPage, UserInbox, ProductSubcategoryPage
 } from "./routes/Routes.js"
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -70,6 +70,10 @@ const App = ({ data }) => {
         <Route path='/activation/:activation_token' element={<ActivationPage />} />
         <Route path='/seller/activation/:activation_token' element={<SellerActivationPage />} />
         <Route path='/products' element={<ProductsPage />} />
+
+        <Route path='/productsss' element={<ProductSubcategoryPage />} />
+
+
         <Route path='/product/:id' element={<ProductDetailsPage />} />
         <Route path='/best-selling' element={<BestSellingPage />} />
         <Route path='/events' element={<EventsPage />} />

@@ -25,25 +25,12 @@ const Hero = () => {
         setFilteredProducts(filteredProducts);
     }
 
-    //  console.log(filteredProducts)
-        
-       
-
-        // const dispatch = useDispatch();
-
-        // useEffect(() => {
-        //     dispatch(getAllProductsShop(seller._id));
-        // }, [dispatch]);
-
-
-        // 652df7bb4e3edccc4a614b6c
-
         return (
             <>
                 <Banner />
                 <Navbar  />
 
-                <div className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.noramlFlex}`} style={{ backgroundImage: "url(https://themes.rslahmed.dev/rafcart/assets/images/banner-2.jpg)" }} >
+                <div className={`relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-no-repeat ${styles.noramlFlex}`} style={{ backgroundImage: "url('https://themes.rslahmed.dev/rafcart/assets/images/banner-2.jpg')" , backgroundSize: "cover", backgroundRepeat: "no-repeat"}} >
                     <div className={`${styles.section} w-[90%] 800px:w-[60%]`}>
                         <h1 className={`text-[35px] leading-[1.2] 800px:text-[60px] text-[#3d3a3a] font-[600] capitalize`}>Best collection for <br /> Home Decoration</h1>
                         <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#000000ba]">

@@ -40,12 +40,12 @@ const ShopSettings = () => {
             toast.success("Avatar updated successfully!");
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(error?.response?.data?.message);
           });
       }
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(e?.target?.files[0]);
   };
 
   const updateHandler = async (e) => {

@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
 import { toast } from "react-toastify";
+import { ProgressBar } from "react-loader-spinner"
+import Loader from "../../pages/Loader";
+
 
 const CreateProduct = () => {
     const { seller } = useSelector((state) => state.seller);
-    const { success, error } = useSelector((state) => state.products);
+    const {isLoading, success, error } = useSelector((state) => state.products);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -16,45 +19,25 @@ const CreateProduct = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
     const [tags, setTags] = useState("");
     const [originalPrice, setOriginalPrice] = useState();
     const [discountPrice, setDiscountPrice] = useState();
     const [stock, setStock] = useState();
-
-    console.log("images",images)
-    useEffect(() => {
-        if (error) {
-            toast.error(error);
-        }
-        if (success) {
-            toast.success("Product created successfully!");
-            navigate("/dashboard");
-            window.location.reload();
-        }
-    }, [dispatch, error, success]);
+    const [customize, setCustomize] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleImageChange = (e) => {
         e.preventDefault()
         const files = Array.from(e?.target?.files);
-        console.log(files)
 
         setImages((prevImages) => [...prevImages, ...files]);
-
-        // files.forEach((file) => {
-        //   const reader = new FileReader();
-
-        //   reader.onload = () => {
-        //     if (reader.readyState === 2) {
-        //       setImages((old) => [...old, reader.result]);
-        //     }
-        //   };
-        //   reader.readAsDataURL(file);
-        // });
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
 
+        e.preventDefault();
+        setLoading(true)
         const newForm = new FormData();
 
         images.forEach((image) => {
@@ -63,34 +46,43 @@ const CreateProduct = () => {
         newForm.append("name", name);
         newForm.append("description", description);
         newForm.append("category", category);
+        newForm.append("subCategory", subCategory);
         newForm.append("tags", tags);
         newForm.append("originalPrice", originalPrice);
         newForm.append("discountPrice", discountPrice);
         newForm.append("stock", stock);
         newForm.append("shopId", seller._id);
-        // dispatch(
-        //     createProduct({
-        //         name,
-        //         description,
-        //         category,
-        //         tags,
-        //         originalPrice,
-        //         discountPrice,
-        //         stock,
-        //         shopId: seller._id,
-        //         images,
-        //     })
-        // );
+        newForm.append("customize", customize)
+
 
         dispatch(createProduct(newForm))
+        setLoading(false)
     };
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+
+        if (isLoading) {
+            <Loader />
+        }
+
+        if (success) {
+            toast.success("Product created successfully!");
+            navigate("/dashboard");
+            window.location.reload();
+        }
+    }, [dispatch, error, success]);
 
 
     return (
-        <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
+        <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[100vh] rounded-[4px] p-3 overflow-y-scroll border border-red-500">
             <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
             {/* create product form */}
-            <form onSubmit={handleSubmit}>
+            
+                
+                <form onSubmit={handleSubmit} >
                 <br />
 
                 <div>
@@ -130,11 +122,7 @@ const CreateProduct = () => {
                     <label className="pb-2">
                         Category <span className="text-red-500">*</span>
                     </label>
-                    <select
-                        className="w-full mt-2 border h-[35px] rounded-[5px]"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    >
+                    <select className="w-full mt-2 border h-[35px] rounded-[5px]" value={category} onChange={(e) => setCategory(e.target.value)} >
                         <option value="Choose a category">Choose a category</option>
                         {categoriesData &&
                             categoriesData.map((i) => (
@@ -143,6 +131,19 @@ const CreateProduct = () => {
                                 </option>
                             ))}
                     </select>
+                </div>
+                <br />
+
+                <div>
+                    <label className="pb-2">Sub Category</label>
+                    <input
+                        type="text"
+                        name="subCategory"
+                        value={subCategory}
+                        className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        onChange={(e) => setSubCategory(e.target.value)}
+                        placeholder="Enter your product Sub Category..."
+                    />
                 </div>
                 <br />
 
@@ -158,6 +159,19 @@ const CreateProduct = () => {
                     />
                 </div>
                 <br />
+
+                <div className="">
+
+                    <label className="pb-4">Can you customize this product as per user requirments ?</label>
+                    <br />
+                    <div className="border border-gray-300 rounded-[3px]">
+                        <input className="mt-2 ml-2" type="radio" name='customize' value='true' onChange={(e) => setCustomize(e.target.value)} />Yes
+                        <input className="ml-2 mt-2" type="radio" name='customize' value='false' onChange={(e) => setCustomize(e.target.value)} />No
+                    </div>
+                </div>
+                <br />
+
+
 
                 <div>
                     <label className="pb-2">Original Price</label>
@@ -215,16 +229,21 @@ const CreateProduct = () => {
                             <img src={URL.createObjectURL(i)} key={i} alt="" className="h-[120px] w-[120px] object-cover m-2" />
                         ))}
                     </div>
-                    <br />
-                    <div>
-                        <input
-                            type="submit"
-                            value="Create"
-                            className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        />
-                    </div>
+
                 </div>
+                <br />
+
+                <div>
+                    <button className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm " >
+                        Create
+                    </button>
+
+                </div>
+                {
+                    isLoading && <div className="flex justify-center"><Loader /></div>
+                }
             </form>
+            
         </div>
     );
 };

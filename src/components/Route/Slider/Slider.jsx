@@ -24,16 +24,16 @@ const responsive = {
 };
 
 
-
-
 const Slider = () => {
     const { allProducts } = useSelector(state => state.products)
     const timerURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg';
 
     const renderer = ({ hours, minutes, seconds }) => {
-        return (<div>
+        return (
+        <div>
             <span className='text-[#7f7f7f] text-[12px] mx-auto w-[11/12]'>{hours} : {minutes} : {seconds} Left</span>
-        </div>)
+           </div>
+        )
     }
 
     return (
@@ -77,6 +77,7 @@ const Slider = () => {
             }
         </div>
     )
+    
 }
 
 export default Slider

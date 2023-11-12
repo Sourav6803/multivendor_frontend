@@ -22,7 +22,7 @@ const ProductCard = ({ data, isEvent }) => {
     const { cart } = useSelector(state => state?.cart)
     const [count, setCount] = useState(1);
 
-    // console.log(isEvent)
+    
 
     const dispatch = useDispatch()
 
@@ -66,10 +66,10 @@ const ProductCard = ({ data, isEvent }) => {
 
 
     return (
-        <div className='w-full h-[300px] bg-white rounded-lg shadow-sm relative cursor-pointer '>
-            <div className='p-1'>
+        <div className='w-full h-[310px] bg-white rounded-lg shadow-sm relative cursor-pointer '>
+            <div className='p-2'>
                 <Link to={`${isEvent === true ? `/product/${data?._id}?isEvent=true` : `/product/${data?._id}`}`}>
-                    <img src={`${data?.images && data?.images[0]}`} alt='' className='w-full h-[160px]  object-cover rounded-md' />
+                    <img src={`${data?.images && data?.images[0]}`} alt='' className='w-full h-[180px]   object-cover rounded-md'  />
                 </Link>
             </div>
 
@@ -105,7 +105,9 @@ const ProductCard = ({ data, isEvent }) => {
                             <span className="ml-1 text-white text-xs font-semibold rounded mr-1 mt-[2px] ">{data?.ratings ? data?.ratings : 3} </span>
                             <span><BsFillStarFill color='white' className='mt-[2px]'/></span>
                         </div>
+                        
                     </div>
+                    
                 </Link>
 
                 {/* Side option */}

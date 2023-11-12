@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "../../../styles/styles";
 import ProductCard from "../ProductCard/ProductCard.jsx"
+import Loader from "../../../pages/Loader";
 
 
 
@@ -11,7 +12,7 @@ import ProductCard from "../ProductCard/ProductCard.jsx"
 const NewArrival = () => {
   const [data, setData] = useState([]);
  
-  const { allProducts } = useSelector((state) => state?.products)
+  const { allProducts, isLoading } = useSelector((state) => state?.products)
   
 //   useEffect(()=>{
 //     const fetchData = async() => {
@@ -49,6 +50,7 @@ const NewArrival = () => {
             )
           }
         </div>
+        {isLoading && <div className="flex justify-center"><Loader /></div>}
       </div>
     </div>
   );

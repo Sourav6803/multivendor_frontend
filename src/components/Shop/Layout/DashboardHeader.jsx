@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { backend_url } from "../../../server";
+import mainLogo from "../../main_logo3.jpg"
 
 
 
@@ -17,7 +18,7 @@ const DashboardHeader = () => {
       <div>
         <Link to="/dashboard">
           <img
-            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+            src={mainLogo}
             alt=""
           />
         </Link>
@@ -60,7 +61,7 @@ const DashboardHeader = () => {
             <img
               src={`${seller?.avatar}`}
               alt=""
-              className="w-[50px] h-[50px] rounded-full object-cover"
+              className="w-[50px] h-[50px] rounded-full object-cover border-[3px] border-[#33a466]"
             />
           </Link>
         </div>

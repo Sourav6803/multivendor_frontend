@@ -9,19 +9,19 @@ const Categories = () => {
     const navigate = useNavigate()
     return (
         <>
-            <div className={` !border-spacing-8 sm:block `}>
-                <div className={`branding my-2 flex justify-between  w-full shadow-sm bg-white p-5 rounded-md`}>
+            <div className={` bg-blue-200 !border-spacing-8 sm:block `}>
+                <div className={`branding flex justify-between  w-full shadow-sm bg-blue-200 p-5 rounded-md`}>
                     {
                         brandingData && brandingData.map((i, index) => (
                             <div className='flex items-start  flex-wrap overflow-hidden' key={index}>
                                 <div className='flex pl-5'>
                                     {i.icon}
                                 </div>
-                                <div className='px-3 '>
+                                <div className='px-3 overflow-hidden '>
                                     <p className='font-bold text-sm md:text-base '>
                                         {i.title}
                                     </p>
-                                    <p className='text-xs md:text-sm'> {i.Description}</p>
+                                    {/* <p className='text-xs md:text-sm'> {i.Description}</p> */}
                                 </div>
                             </div>
                         ))

@@ -73,8 +73,8 @@ const Image = styled('img')(({ theme }) => ({
     
     overflowX: 'overlay',
     [theme.breakpoints.down('lg')]: {
-        width: '80px',
-        height: '55px'
+        width: '90px',
+        height: '50px'
     }
 }))
 
@@ -82,6 +82,7 @@ const Image = styled('img')(({ theme }) => ({
 
 const Navbar = () => {
     const navigate = useNavigate()
+
     const handleSubmit = (i) => {
         navigate(`/products?category=${i.title}`)
     }
@@ -89,10 +90,12 @@ const Navbar = () => {
         <Component>
             {
                 categoriesData.map((temp, index )=> (
+                    
                     <Container key={index}>
-                        <Image src={temp.image_Url} style={{  width: 64 }} alt=''  key={index}  onClick={() => handleSubmit(temp)}/>
-                        <Text>{temp.title}</Text>
+                        <Image src={temp.image_Url} style={{  width: 64 , height: 64 }}  alt=''  key={index}  onClick={() => handleSubmit(temp)}/>
+                        <Text>{temp.title.length > 6 ? temp.title.slice(0,6) : temp.title}..</Text>
                     </Container>
+                    
                 ))
             }
         </Component>

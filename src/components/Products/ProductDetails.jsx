@@ -33,7 +33,7 @@ const ProductDetails = ({ data }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    
+
 
     useEffect(() => {
         dispatch(getAllProductsShop(data && data?.shop?._id))
@@ -107,9 +107,8 @@ const ProductDetails = ({ data }) => {
 
     const totalRatings = products && products?.reduce((acc, product) => acc + product?.reviews.reduce((sum, review) => sum + review?.rating, 0), 0)
     const averageRating = Math.ceil(totalRatings / totalReviewsLength) || 0
-
     const discPercentage = Math.ceil(((data?.originalPrice - data?.discountPrice) / data?.originalPrice) * 100)
-    
+    const date = new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000))
 
     return (
         <div className='bg-white '>
@@ -119,12 +118,12 @@ const ProductDetails = ({ data }) => {
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
                                 <div className='w-full 800px:w-[50%] '>
-                                    <img src={`${data && data.images[select]}`} alt='' className='w-full h-[370px] md:h-[500px] object-cover' />
+                                    <img src={`${data && data.images[select]}`} alt='' className='w-full h-[370px] md:h-[500px] object-cover rounded-md' />
                                     <div className='w-full flex flex-wrap ml-2'>
                                         {
                                             data && data?.images?.map((i, index) => (
                                                 <div className={`${select === 0 ? "border" : "null"} cursor-pointer`} key={index}>
-                                                    <img src={`${i}`} alt='' className='h-[100px] overflow-hidden mr-3 mt-3' onClick={() => setSelect(index)} />
+                                                    <img src={`${i}`} alt='' className='h-[80px] overflow-hidden rounded-md mr-3 mt-3' onClick={() => setSelect(index)} />
 
                                                 </div>
 
@@ -141,6 +140,10 @@ const ProductDetails = ({ data }) => {
                                     <h3 className={`${styles.shop_name} pb-1 pt-1 `}>
                                         <span className='text-black'>Seller:</span> <Link to={`/shop/preview/${data?.shop._id}`}>{data?.shop?.name}</Link>
                                     </h3>
+
+                                    {
+                                        data?.customize ? <h2>Customizabe as per user request</h2> : ""
+                                    }
 
 
                                     {/* <p className='mt-3'>{data?.description}</p> */}
@@ -193,9 +196,11 @@ const ProductDetails = ({ data }) => {
                                                 data.discountPrice >= 399 ? <p className='text-green-600  font-bold  ml-5'>FREE Delivery <span className='line-through text-black'>40</span></p> : <span className='flex mt-1 ml-3 '> <FaRupeeSign className='mt-1' /> 40</span>
                                             }
                                         </h5>
-                                        <p>Free shipping and Returns available on all orders!
-                                            <br /> We Ship all us domestic orders within
-                                            <b> 5-10 business days</b>{" "}</p>
+                                        
+                                        
+                                    </div>
+                                    <div>
+                                    <p>Expected Delivery Date {date.toDateString()}</p>
                                     </div>
 
                                     <div className=' mt-3 flex mr-3'>
@@ -211,6 +216,10 @@ const ProductDetails = ({ data }) => {
                                     <div className='mt-3'>
                                         100% Original Products
                                     </div>
+                                    <p>Free shipping and Returns available on all orders!
+                                            <br /> We Ship all us domestic orders within
+                                            <b> 5-10 business days</b>{" "}
+                                        </p>
 
                                     <div className='flex items-center pt-8'>
                                         <img src={`${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full mr-2 ' />
@@ -225,8 +234,8 @@ const ProductDetails = ({ data }) => {
                                         </div>
                                         <Link to={`/shop/preview/${data?.shop._id}`} >
                                             <div className={`${styles.button} bg-[#6443d1] !mt-4 !rounded h-11`} onClick={handleMessageSubmit}>
-                                            <span className='text-white flex items-center'>Send Message <AiOutlineMessage className='ml-1' /></span>
-                                        </div>
+                                                <span className='text-white flex items-center'>Send Message <AiOutlineMessage className='ml-1' /></span>
+                                            </div>
                                         </Link>
                                     </div>
                                 </div>
@@ -316,7 +325,7 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
                 </div>
             ) : null}
 
-            
+
 
             {
                 active === 3 && (
@@ -325,7 +334,7 @@ const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating 
                             <Link to={`/shop/preview/${data?.shop?._id}`}>
                                 <div className='flex items-center'>
                                     <img src={`${data?.shop?.avatar}`} alt='' className='w-[50px] h-[50px] rounded-full ' />
-                                    
+
                                     <div className='pl-3'>
                                         <h3 className={`${styles.shop_name}`}>{data?.shop?.name}</h3>
                                         <h5 className='pb-2 text-[15px]'>({averageRating}/5) Ratings</h5>

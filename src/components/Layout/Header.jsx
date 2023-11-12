@@ -14,6 +14,8 @@ import Cart from '../Cart/Cart';
 import Wishlist from '../Wishlist/Wishlist';
 import { RxCross1 } from 'react-icons/rx';
 import mainLogo from "../main_logo3.jpg"
+import Logo from "../../Assests/JB.png"
+
 
 
 const Header = ({ activeHeading }) => {
@@ -50,7 +52,7 @@ const Header = ({ activeHeading }) => {
     })
     return (
         <>
-            <div className={`${styles.section}`}>
+            <div className={`${styles.section} `}>
                 <div className='hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between'>
                     <div>
                         <Link to="/">
@@ -69,8 +71,8 @@ const Header = ({ activeHeading }) => {
                                     {searchData && searchData.map((i, index) => {
 
                                         return (
-                                            <Link to={`/product/${i?._id}`}>
-                                                <div key={index} className='w-full flex items-start py-3'>
+                                            <Link to={`/product/${i?._id}`} key={index} >
+                                                <div key={index} className='w-full flex items-start py-3' >
                                                     <img src={`${i.images[0]}`} alt='img' className='w-[40px] h-[40px] mr-[10px]' />
                                                     <h1>{i?.name}</h1>
                                                 </div>
@@ -167,7 +169,7 @@ const Header = ({ activeHeading }) => {
             {/* Mobile header */}
 
             <div className={` ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null} w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}>
-                <div className='w-full flex items-center justify-between'>
+                <div className='w-full flex items-center justify-between '>
                     <div className="">
                         <BiMenuAltLeft size={40} className="ml-4" onClick={() => setOpen(true)} />
                     </div>
@@ -227,10 +229,10 @@ const Header = ({ activeHeading }) => {
                                                 {searchData && searchData?.map((i, index) => {
 
                                                     const d = i?.name
-                                                    console.log(i._id)
+                                                    
                                                     const Product_Name = d.replace(/\s+/g, "-")
                                                     return (
-                                                        <Link to={`/product/${i?._id}`}>
+                                                        <Link to={`/product/${i?._id}`} >
                                                             <div key={index} className='w-full flex items-start py-3'>
                                                                 <img src={i?.images[0]} alt='img' className='w-[50px]  mr-2' />
                                                                 <h5>{i?.name}</h5>

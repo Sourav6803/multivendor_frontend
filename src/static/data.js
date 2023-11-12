@@ -191,10 +191,10 @@ export const navItems = [
   export const categoriesData = [
     {
       id: 1,
-      title: "Laptops",
+      title: "Painting",
       subTitle: "",
       image_Url:
-        "https://cdn.shopify.com/s/files/1/1706/9177/products/NEWAppleMacbookProwithM1ProChip14InchLaptop2021ModelMKGQ3LL_A_16GB_1TBSSD_custommacbd.jpg?v=1659592838",
+        "https://www.shutterstock.com/shutterstock/photos/162908510/display_1500/stock-photo-color-palette-and-artistic-brush-raster-version-162908510.jpg",
     },
     {
       id: 2,
@@ -205,10 +205,10 @@ export const navItems = [
     },
     {
       id: 3,
-      title: "Accesories",
+      title: "Bottle painting",
       subTitle: "",
       image_Url:
-        "https://img.freepik.com/free-vector/ordering-goods-online-internet-store-online-shopping-niche-e-commerce-website-mother-buying-babies-clothes-footwear-toys-infant-accessories_335657-2345.jpg?w=2000",
+        "https://housing.com/news/wp-content/uploads/2022/11/Bottle-painting-ideas.png",
     },
     {
       id: 4,
@@ -219,10 +219,10 @@ export const navItems = [
     },
     {
       id: 5,
-      title: "Shoes",
+      title: "Potrait",
       subTitle: "",
       image_Url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvBQPQMVNRd6TtDkGs2dCri0Y-rxKkFOiEWw&usqp=CAU",
+        "https://5.imimg.com/data5/SELLER/Default/2022/2/BQ/EG/JH/99206553/realistic-pencil-portrait.jpg",
     },
     {
       id: 6,
@@ -233,9 +233,9 @@ export const navItems = [
     },
     {
       id: 7,
-      title: "Pet Care",
+      title: "Home decoration",
       subTitle: "",
-      image_Url: "https://cdn.openpr.com/T/c/Tc15444071_g.jpg",
+      image_Url: "https://img.lovepik.com/original_origin_pic/17/12/14/c145772610255f8d819e49a9422d44ab.png_wh300.png",
     },
     {
       id: 8,
@@ -259,6 +259,62 @@ export const navItems = [
         "https://searchspring.com/wp-content/uploads/2022/10/Hero-Image-Platform-Others-2.png",
     },
   ];
+
+ export const paintingSubCategoriesdata = [
+    {
+      id: 1,
+      title: "Water Painting",
+      subTitle : '',
+      image_Url: 'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/sunset.jpg'
+    },
+    {
+      id: 2,
+      title: "Wall Paintings",
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/Wall%20Art.jpg'
+    },
+    {
+      id: 3,
+      title: "Stll Live Drawing",
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/sprite.jpg'
+    },
+    {
+      id: 4,
+      title: 'Painted Pot',
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/sprite.jpg'
+    },
+    {
+      id: 5,
+      title: 'Canvas',
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/arclyc%20on%20canvas.jpg'
+    },
+    {
+      id: 6,
+      title: 'Charcol Art',
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/sprite.jpg'
+    },
+    {
+      id: 7,
+      title: 'Pencil Sketch',
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/msd1.jpg'
+    },
+    {
+      id: 8,
+      title: 'Pen Work',
+      subTitle : '',
+      image_Url:'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/pen.jpg'
+    }
+  ]
+
+  
+  
+  
+  
   
   // product Data
   export const productData = [
@@ -320,7 +376,7 @@ export const navItems = [
       rating: 5,
       total_sell: 80,
       stock: 10,
-      category:"Mobile & Tablets"
+      category: "Mobile & Tablets"
     },
     {
       id: 1,

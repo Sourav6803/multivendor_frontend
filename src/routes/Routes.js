@@ -16,6 +16,9 @@ import OrderSuccessPage from "../pages/OrderSuccessPage.js";
 import OrderDetailsPage from "../pages/OrderDetailsPage.jsx";
 import TrackOrderPage from "../pages/TrackOrderPage.jsx";
 import UserInbox from "../pages/UserInbox.jsx";
+import ProductSubcategoryPage from "../pages/PoductSubcategoryPage.jsx";
+
+
 
 
 
@@ -39,5 +42,6 @@ export {
     OrderSuccessPage,
     OrderDetailsPage,
     TrackOrderPage,
-    UserInbox
+    UserInbox,
+    ProductSubcategoryPage
 }
