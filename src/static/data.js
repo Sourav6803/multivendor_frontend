@@ -235,7 +235,7 @@ export const navItems = [
       id: 7,
       title: "Home decoration",
       subTitle: "",
-      image_Url: "https://img.lovepik.com/original_origin_pic/17/12/14/c145772610255f8d819e49a9422d44ab.png_wh300.png",
+      image_Url: "https://media.istockphoto.com/id/936319628/photo/asian-golden-buddha-sign-of-peace-in-thai-temple-space-for-text.jpg?s=1024x1024&w=is&k=20&c=C9DgZ46RRAfMHgcXo063T7blmuFFDSfhmMP0f3L6ZPE=",
     },
     {
       id: 8,

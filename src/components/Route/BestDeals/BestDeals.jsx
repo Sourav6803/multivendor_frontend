@@ -10,18 +10,7 @@ const BestDeals = () => {
   const [data, setData] = useState([]);
   const { allProducts, isLoading } = useSelector((state) => state?.products)
   const [loading, setLoading] = useState(false)
-  // const [filteredProducts, setFilteredProducts] = useState([]);
-
-  //   const handleBannerClick = () => {
-  //     let sellerId = "652df7bb4e3edccc4a614b6c"
-
-  //   const filteredProducts = allProducts.filter(product => console.log(product));
-  //   setFilteredProducts(filteredProducts);
-  // }
-
-
-
-
+  
   useEffect(() => {
     setLoading(true)
     const allProductsData = allProducts ? [...allProducts] : [];

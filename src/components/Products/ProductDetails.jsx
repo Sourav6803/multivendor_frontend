@@ -17,6 +17,8 @@ import { TbTruckDelivery } from "react-icons/tb"
 import { FaRupeeSign } from "react-icons/fa"
 import { CiLocationOn } from "react-icons/ci"
 import { TbMoneybag } from "react-icons/tb"
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 // import { addTocart } from '../../../redux/actions/cart';
 
@@ -118,7 +120,7 @@ const ProductDetails = ({ data }) => {
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
                                 <div className='w-full 800px:w-[50%] '>
-                                    <img src={`${data && data.images[select]}`} alt='' className='w-full h-[370px] md:h-[500px] object-cover rounded-md' />
+                                    {/* <img src={`${data && data.images[select]}`} alt='' className='w-full h-[370px] md:h-[500px] object-cover rounded-md' />
                                     <div className='w-full flex flex-wrap ml-2'>
                                         {
                                             data && data?.images?.map((i, index) => (
@@ -129,7 +131,15 @@ const ProductDetails = ({ data }) => {
 
                                             ))
                                         }
-                                    </div>
+                                    </div> */}
+
+                                    {
+                                        data && data?.images?.length && (
+                                            <Carousel showArrows={true} autoPlay infiniteLoop>
+                                                {data.images && data.images.map((img, index)=> <img src={img} alt={data?.title} key={index} />)}
+                                            </Carousel>
+                                        )
+                                    }
 
                                 </div>
 

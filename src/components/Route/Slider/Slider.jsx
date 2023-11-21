@@ -19,7 +19,7 @@ const responsive = {
     },
     mobile: {
         breakpoint: { max: 464, min: 0 },
-        items: 1,
+        items: 2,
     }
 };
 
@@ -54,27 +54,28 @@ const Slider = () => {
                     centerMode={true}
                     infinite={true}
                     autoPlay={true}
-                    autoPlaySpeed={10000}
+                    autoPlaySpeed={3000}
                     keyBoardControl={true}
                     showDots={false}
                     containerClass="carousel-container"
-                    // removeArrowOnDeviceType={["tablet", "mobile"]}
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
                     dotListClass="custom-dot-list-style"
                     itemClass="carousel-item-padding-40-px" >
+                    
                     {
                         allProducts && allProducts?.map((product, key) => (
                             <div className='text-center ' style={{ textAlign: "center", padding: "25px 15px" }} key={key}>
 
-                                <Link to={`/product/${product?._id}`}><img key={key} src={product?.images[0]} alt='' style={{ width: "auto", height: "150px" }} /></Link>
-                                <p className='font-semibold'>{product?.name.slice(0, 17)}...</p>
-                                <p className='text-green-800'>You will get {product.discountPercentage}% Off</p>
-                                <p className='text-slate-600'>{product?.tags}</p>
+                                <Link to={`/product/${product?._id}`}><img key={key} src={product?.images[0]} alt='' style={{ width: "auto", height: "100px" }} /></Link>
+                                <p className='font-semibold text-[14px]'>{product?.name.slice(0, 17)}...</p>
+                                <p className='text-green-800 text-[12px]'>You will get {product.discountPercentage}% Off</p>
+                                <p className='text-slate-600 text-[12px]'>{product?.tags}</p>
 
                             </div>
                         ))
                     }
                 </Carousel>
-            }
+            }   
         </div>
     )
     

@@ -92,7 +92,7 @@ const Navbar = () => {
                 categoriesData.map((temp, index )=> (
                     
                     <Container key={index}>
-                        <Image src={temp.image_Url} style={{  width: 64 , height: 64 }}  alt=''  key={index}  onClick={() => handleSubmit(temp)}/>
+                        <Image src={temp.image_Url} style={{  width: 100 , height: 50 }}  alt=''  key={index}  onClick={() => handleSubmit(temp)}/>
                         <Text>{temp.title.length > 6 ? temp.title.slice(0,6) : temp.title}..</Text>
                     </Container>
                     

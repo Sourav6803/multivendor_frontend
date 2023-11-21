@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 const Cart = ({ setOpenCart }) => {
     const { cart } = useSelector((state) => state?.cart);
+    const { user, isAuthenticated } = useSelector(state => state.user)
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
 
@@ -34,7 +35,8 @@ const Cart = ({ setOpenCart }) => {
         <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
             {
                 !loading && <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[25%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
-                    {cart && cart.length === 0 ? (
+                    
+                         {cart  && cart.length === 0 ? (
                         <div className="w-full h-screen flex items-center justify-center">
                             <div className="flex w-full place-content-between pt-5 pr-5 fixed top-3 right-3">
                                 <div>
@@ -101,6 +103,7 @@ const Cart = ({ setOpenCart }) => {
                             </div>
                         </>
                     )}
+                    
 
                     {
                         loading && <h2>Loading...</h2>

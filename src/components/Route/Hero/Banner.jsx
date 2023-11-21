@@ -45,8 +45,9 @@ const Banner = () => {
             infinite={true}
             autoPlay={true}
             autoPlaySpeed={4000}
+            removeArrowOnDeviceType={["tablet", "mobile"]}
             keyBoardControl={true}
-            showDots={false}
+            showDots={true}
             slidesToSlide={1}
             containerClass="carousel-container"
             dotListClass="custom-dot-list-style"

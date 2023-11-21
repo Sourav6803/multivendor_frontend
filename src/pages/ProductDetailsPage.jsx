@@ -33,7 +33,7 @@ const ProductDetailsPage = () => {
 
   }, [allProducts, eventData])
 
-  console.log(data)
+ 
 
 
   return (

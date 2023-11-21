@@ -16,6 +16,7 @@ import Blog from '../components/Route/Blog/Blog';
 import TopBanner from '../components/Route/Banner/TopBanner';
 import CartProduct from '../components/Route/CartProduct/CartProduct';
 import { useSelector } from 'react-redux';
+import Trending from '../components/Route/Trending/Trending';
 
 
 const HomePage = () => {
@@ -49,6 +50,7 @@ const HomePage = () => {
         <FeaturedProduct />
         <MidSection />
         <TopDeals />
+        <Trending />
         <CartProduct />
         <NewArrival />
         <Slider data={data} />

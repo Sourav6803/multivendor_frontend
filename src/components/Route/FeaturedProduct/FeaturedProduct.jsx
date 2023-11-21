@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/styles'
 import ProductCard from '../ProductCard/ProductCard'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import Loader from "../../../pages/Loader";
 
 
 const FeaturedProduct = () => {
     const [data, setData] = useState([]);
-    const {allProducts} = useSelector(state=>state?.products)
+    const {allProducts , isLoading} = useSelector(state=>state?.products)
     
 
     useEffect(()=>{
@@ -27,6 +28,9 @@ const FeaturedProduct = () => {
                         data && data?.map((i,index)=> <ProductCard data={i} key={index}/>)
                     }
                 </div>
+                {
+              isLoading && <div className="flex justify-center"><Loader /></div>
+            }
             </div>
         </div>
     )

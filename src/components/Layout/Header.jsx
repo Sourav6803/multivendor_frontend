@@ -14,7 +14,7 @@ import Cart from '../Cart/Cart';
 import Wishlist from '../Wishlist/Wishlist';
 import { RxCross1 } from 'react-icons/rx';
 import mainLogo from "../main_logo3.jpg"
-import Logo from "../../Assests/JB.png"
+import Logo from "./Jamalpur BAZAR-logos__white.png"
 
 
 
@@ -128,7 +128,7 @@ const Header = ({ activeHeading }) => {
                         <div className={`${styles.noramlFlex}`}>
                             <div className='relative cursor-pointer mr-[15px]' onClick={() => setOpenCart(true)}>
                                 <AiOutlineShoppingCart size={30} color='rgb(255 255 255 / 83%' />
-                                <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>{cart && cart?.length}</span>
+                                <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>{cart && isAuthenticated && cart?.length}</span>
                             </div>
                         </div>
 
@@ -168,18 +168,21 @@ const Header = ({ activeHeading }) => {
 
             {/* Mobile header */}
 
-            <div className={` ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null} w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}>
-                <div className='w-full flex items-center justify-between '>
+            <div className={` ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null} w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`} style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }} >
+                <div className='w-full flex items-center justify-between ' >
                     <div className="">
                         <BiMenuAltLeft size={40} className="ml-4" onClick={() => setOpen(true)} />
                     </div>
-                    <div>
+                    <div className='ml-[-200px]'>
                         <Link to="/">
                             <img
-                                src={mainLogo}
+                                src={Logo}
                                 alt=""
-                                className=" cursor-pointer"
+                                className=" items-start cursor-pointer "
+                                height={40}
+                                width={50}
                             />
+                            {/* <p>Jamalpur BAZAAR</p> */}
                         </Link>
                     </div>
                     <div >
@@ -263,7 +266,7 @@ const Header = ({ activeHeading }) => {
                                         isAuthenticated ? (
                                             <div>
                                                 <Link to="/profile">
-                                                    <img src={`${user?.avatar}`} alt='' className='w-[60px] h-[60px] rounded-full border-[3px] border-[#33a466] ' />
+                                                    <img src={`${user?.avatar}`} alt='' className='w-[110px] h-[110px] rounded-full border-[3px] border-[#33a466] ' />
                                                 </Link>
                                             </div>
                                         ) : (
