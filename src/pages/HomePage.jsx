@@ -17,6 +17,7 @@ import TopBanner from '../components/Route/Banner/TopBanner';
 import CartProduct from '../components/Route/CartProduct/CartProduct';
 import { useSelector } from 'react-redux';
 import Trending from '../components/Route/Trending/Trending';
+import Callegraphic from '../components/Route/Calegraphic/Callegraphic';
 
 
 const HomePage = () => {
@@ -55,6 +56,7 @@ const HomePage = () => {
         <NewArrival />
         <Slider data={data} />
         <Sponsored />
+        <Callegraphic />
         <Blog />
         <Footer />
     </div>

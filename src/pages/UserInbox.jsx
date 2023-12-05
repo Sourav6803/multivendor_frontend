@@ -7,24 +7,76 @@ import { server } from "../server";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+import { MdEmojiEmotions } from "react-icons/md";
 import { TfiGallery } from "react-icons/tfi";
 import styles from "../styles/styles";
+import { toast } from "react-toastify";
+import { newMessages, uploadFile } from "../service/api";
+import { MdDownloadForOffline } from "react-icons/md";
+import { downloadMedia } from "../utils/common-utils";
+import EmojiPicker from 'emoji-picker-react';
+import ClipLoader from "react-spinners/ClipLoader"
 const ENDPOINT = "https://multivendor-socket.onrender.com";
+
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInbox = () => {
-  const { user,loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
   const [conversations, setConversations] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState();
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
   const [userData, setUserData] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [images, setImages] = useState();
   const [activeStatus, setActiveStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
+  const [groupTitle, setGroupTitle] = useState()
+
+  const [img, setImg] = useState('')
+  const [val, setVal] = useState('')
+  const [fil, setFil] = useState()
+  const [newMessageFlag, setNewMessageFlag] = useState()
+  const [isSuccess, setissuccess] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [imgLoading, setImgLoading] = useState(false)
+
+
+  useEffect(() => {
+    const getImage = async () => {
+      try {
+        if (fil) {
+          const data = new FormData();
+          data.append("name", fil.name);
+          data.append("file", fil);
+          setImgLoading(true)
+          const response = await uploadFile(data);
+          setImg(response?.data);
+          setImgLoading(false)
+          console.log(response.data.message)
+          toast.error(response.data.message)
+          response.data.message === "Only JPEG, PNG, SVG, JPG and GIF images are allowed!" ? setIsError(true) : setIsError(false)
+          
+        }
+      } catch (error) {
+        //console.log(error.response.data.message)
+        toast.error(error.message)
+      }
+    }
+    getImage();
+  }, [fil])
+
+  const onFileChange = (e) => {
+    setVal(e.target?.files[0]?.name);
+    setFil(e.target?.files[0]);
+    const selectedFile = e.target?.files[0]
+    const allowedType = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/bmp', 'image/svg']
+    if (!allowedType.includes(selectedFile?.type)) {
+      setIsError(true)
+      setErrorMessage("Only JPEG, PNG, SVG, JPG and GIF images are allowed!")
+    }
+  }
 
   useEffect(() => {
     socketId.on("getMessage", (data) => {
@@ -37,16 +89,13 @@ const UserInbox = () => {
   }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
     const getConversation = async () => {
       try {
-        const resonse = await axios.get(
-          `${server}/conversation/get-all-conversation-user/${user?._id}`,
+        const resonse = await axios.get(`${server}/conversation/get-all-conversation-user/${user?._id}`,
           {
             withCredentials: true,
           }
@@ -54,11 +103,12 @@ const UserInbox = () => {
 
         setConversations(resonse.data.conversations);
       } catch (error) {
-        // console.log(error);
+        toast.error(error.message)
       }
     };
     getConversation();
-  }, [user, messages]);
+  }, [user]);
+
 
   useEffect(() => {
     if (user) {
@@ -86,21 +136,35 @@ const UserInbox = () => {
         );
         setMessages(response.data.messages);
       } catch (error) {
+        toast.error(error.message)
         console.log(error);
       }
     };
     getMessage();
-  }, [currentChat]);
+  }, [currentChat, newMessageFlag, user?._id]);
+
+
 
   // create new message
   const sendMessageHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    let message = {};
+    if (!fil) {
+      message = {
+        sender: user._id,
+        text: val,
+        conversationId: currentChat._id,
+        type: 'text',
+      };
+    } else {
+      message = {
+        sender: user._id,
+        text: img,
+        conversationId: currentChat._id,
+        type: 'file',
+      };
+    }
 
-    const message = {
-      sender: user._id,
-      text: newMessage,
-      conversationId: currentChat._id,
-    };
     const receiverId = currentChat.members.find(
       (member) => member !== user?._id
     );
@@ -108,116 +172,41 @@ const UserInbox = () => {
     socketId.emit("sendMessage", {
       senderId: user?._id,
       receiverId,
-      text: newMessage,
+      text: val,
     });
 
-    try {
-      if (newMessage !== "") {
-        await axios
-          .post(`${server}/message/create-new-message`, message)
-          .then((res) => {
-            setMessages([...messages, res.data.message]);
-            updateLastMessage();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await newMessages(message)
+
+    setVal('');
+    setFil();
+    setImg('');
+    setNewMessageFlag(prev => !prev);
+
+    // setIsError(false)
+    // setissuccess(true)
   };
 
-  const updateLastMessage = async () => {
-    socketId.emit("updateLastMessage", {
-      lastMessage: newMessage,
-      lastMessageId: user._id,
-    });
 
-    await axios
-      .put(`${server}/conversation/update-last-message/${currentChat._id}`, {
-        lastMessage: newMessage,
-        lastMessageId: user._id,
-      })
-      .then((res) => {
-        setNewMessage("");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleImageUpload = async (e) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImages(reader.result);
-        imageSendingHandler(reader.result);
-      }
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const imageSendingHandler = async (e) => {
-
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
-
-    socketId.emit("sendMessage", {
-      senderId: user._id,
-      receiverId,
-      images: e,
-    });
-
-    try {
-      await axios
-        .post(
-          `${server}/message/create-new-message`,
-          {
-            images: e,
-            sender: user._id,
-            text: newMessage,
-            conversationId: currentChat._id,
-          }
-        )
-        .then((res) => {
-          setImages();
-          setMessages([...messages, res.data.message]);
-          updateLastMessageForImage();
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateLastMessageForImage = async () => {
-    await axios.put(
-      `${server}/conversation/update-last-message/${currentChat._id}`,
-      {
-        lastMessage: "Photo",
-        lastMessageId: user._id,
-      }
-    );
-  };
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ beahaviour: "smooth" });
   }, [messages]);
+
 
   return (
     <div className="w-full">
       {!open && (
         <>
           <Header />
+
           <h1 className="text-center text-[30px] py-3 font-Poppins">
             All Messages
           </h1>
           {/* All messages list */}
-          {conversations &&
-            conversations.map((item, index) => (
+
+          {conversations?.length && conversations.map((item, index) => (
+            <>
+
               <MessageList
                 data={item}
                 key={index}
@@ -230,48 +219,51 @@ const UserInbox = () => {
                 online={onlineCheck(item)}
                 setActiveStatus={setActiveStatus}
                 loading={loading}
+                value={val}
+                groupTitle={groupTitle}
+                setGroupTitle={setGroupTitle}
               />
-            ))}
+            </>
+          ))}
         </>
       )}
+
 
       {open && (
         <SellerInbox
           setOpen={setOpen}
-          newMessage={newMessage}
-          setNewMessage={setNewMessage}
+          data={conversations}
           sendMessageHandler={sendMessageHandler}
           messages={messages}
           sellerId={user._id}
+          groupTitle={groupTitle}
           userData={userData}
           activeStatus={activeStatus}
           scrollRef={scrollRef}
-          handleImageUpload={handleImageUpload}
+          value={val}
+          onFileChange={onFileChange}
+          setValue={setVal}
+          isError={isError}
+          errorMessage={errorMessage}
+          imgLoading={imgLoading}
+          setImgLoading={setImgLoading}
         />
       )}
     </div>
   );
 };
 
-const MessageList = ({
-  data,
-  index,
-  setOpen,
-  setCurrentChat,
-  me,
-  setUserData,
-  userData,
-  online,
-  setActiveStatus,
-  loading
-}) => {
+const MessageList = ({ data, index, setOpen, setCurrentChat, me, setUserData, userData, online, setActiveStatus, loading, groupTitle, setGroupTitle }) => {
   const [active, setActive] = useState(0);
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
-  const handleClick = (id) => {
+
+  const handleClick = (id, data) => {
+    setGroupTitle(data?.groupTitle)
     navigate(`/inbox?${id}`);
     setOpen(true);
   };
+
 
   useEffect(() => {
     setActiveStatus(online);
@@ -287,25 +279,25 @@ const MessageList = ({
     getUser();
   }, [me, data]);
 
+
+  const msgLength = data?.lastMessage?.length >= 10 ? data?.lastMessage.slice(0, 10) + "..." : data?.lastMessage
+
+
   return (
+
     <div
-      className={`w-full flex p-3 px-3 ${
-        active === index ? "bg-[#00000010]" : "bg-transparent"
-      }  cursor-pointer`}
+      className={`w-full flex p-3 px-3 ${active === index ? "bg-[#00000010]" : "bg-transparent"}  cursor-pointer`}
       onClick={(e) =>
         setActive(index) ||
-        handleClick(data._id) ||
+        handleClick(data._id, data) ||
         setCurrentChat(data) ||
         setUserData(user) ||
         setActiveStatus(online)
       }
     >
       <div className="relative">
-        <img
-          src={`${user?.avatar}`}
-          alt=""
-          className="w-[50px] h-[50px] rounded-full"
-        />
+        <img src={`${user?.avatar}`} alt="hhh" className="w-[50px] h-[50px] rounded-full" />
+
         {online ? (
           <div className="w-[12px] h-[12px] bg-green-400 rounded-full absolute top-[2px] right-[2px]" />
         ) : (
@@ -313,34 +305,32 @@ const MessageList = ({
         )}
       </div>
       <div className="pl-3">
-        <h1 className="text-[18px]">{user?.name}</h1>
+        <h1 className="text-[18px]">{user?.name} ({data?.groupTitle?.length > 19 ? data?.groupTitle.slice(0, 19) + "..." : data?.groupTitle})</h1>
         <p className="text-[16px] text-[#000c]">
-          {!loading && data?.lastMessageId !== userData?._id
-            ? "You:"
-            : userData?.name.split(" ")[0] + ": "}{" "}
-          {data?.lastMessage}
+
+
+          {(/\.(gif|jpg|jpeg|tiff|png)$/i).test(data.lastMessage) ? "Photo" : msgLength}
         </p>
       </div>
     </div>
   );
 };
 
-const SellerInbox = ({
-  setOpen,
-  newMessage,
-  setNewMessage,
-  sendMessageHandler,
-  messages,
-  sellerId,
-  userData,
-  activeStatus,
-  scrollRef,
-  handleImageUpload,
-}) => {
+const SellerInbox = ({ setOpen, value, groupTitle, data,setImgLoading, imgLoading, setValue, onFileChange, sendMessageHandler, messages, sellerId, userData, activeStatus, scrollRef, isError, errorMessage }) => {
+
+const [emoji , setEmoji] = useState(false)
+
+console.log(isError)
+
+const emojiClick = ((e, emojiObj)=>{
+  setValue(prevInput => prevInput + emojiObj.emoji)
+  setEmoji(false)
+})
+
   return (
     <div className="w-[full] min-h-full flex flex-col justify-between p-5">
       {/* message header */}
-      <div className="w-full flex p-3 items-center justify-between bg-slate-200">
+      <div className="w-full flex p-3 items-center justify-between bg-[#00bfa5]">
         <div className="flex">
           <img
             src={`${userData?.avatar}`}
@@ -348,8 +338,9 @@ const SellerInbox = ({
             className="w-[60px] h-[60px] rounded-full"
           />
           <div className="pl-3">
-            <h1 className="text-[18px] font-[600]">{userData?.name}</h1>
-            <h1>{activeStatus ? "Active Now" : ""}</h1>
+            <h1 className="text-[18px] font-[400] text-white">{userData?.name}</h1>
+            <p className="text-white">({groupTitle})</p>
+            <h1 className="text-white text-[14px]">{activeStatus ? "Active Now" : "offline"}</h1>
           </div>
         </div>
         <AiOutlineArrowRight
@@ -360,86 +351,100 @@ const SellerInbox = ({
       </div>
 
       {/* messages */}
-      <div className="px-3 h-[75vh] py-3 overflow-y-scroll">
-        {messages &&
-          messages.map((item, index) => (
-            <div
-              className={`flex w-full my-2 ${
-                item.sender === sellerId ? "justify-end" : "justify-start"
-              }`}
-              ref={scrollRef}
-            >
-              {item.sender !== sellerId && (
-                <img
-                  src={`${userData?.avatar}`}
-                  className="w-[40px] h-[40px] rounded-full mr-3"
-                  alt=""
-                />
-              )}
-              {item.images && (
-                <img
-                  src={`${item.images}`}
-                  alt=""
-                  className="w-[300px] h-[300px] object-cover rounded-[10px] ml-2 mb-2"
-                />
-              )}
-              {item.text !== "" && (
-                <div>
-                  <div
-                    className={`w-max p-2 rounded ${
-                      item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
-                    } text-[#fff] h-min`}
-                  >
-                    <p>{item.text}</p>
-                  </div>
+      <div className="px-3 h-[75vh] py-3 overflow-y-scroll " style={{ backgroundImage: "url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
+        {messages && messages.map((item, index) => (
 
-                  <p className="text-[12px] text-[#000000d3] pt-1">
-                    {format(item.createdAt)}
-                  </p>
-                </div>
-              )}
+          <>
+
+            <div className={`flex w-full my-2 ${item?.sender === sellerId ? "justify-end" : "justify-start"}`} ref={scrollRef} key={index} >
+
+              {
+                item?.type === 'file' ?
+                  <div >
+                    <div style={{ position: 'relative' }}>
+                      <img src={`${item?.text}`} alt="" className="w-[200px] h-[200px] object-cover rounded-[10px] ml-2 mb-2 border" />
+                      {
+                        item.sender !== sellerId ? <div style={{ position: 'absolute', bottom: 0, right: 0, cursor: 'pointer' }}>
+                          <MdDownloadForOffline size={30} style={{ marginRight: 10, border: '1px solid grey', borderRadius: '50%', }} fontSize='large' onClick={(e) => downloadMedia(e, item.text)} />
+                        </div> : ''
+                      }
+                    </div>
+
+                    <p className="text-[12px] text-[#000000d3] pt-1">
+                      {format(item.createdAt)}
+                    </p>
+                    {
+                      imgLoading && (<ClipLoader />)
+                    }
+                  </div>
+                  :
+                  <div>
+                    <div style={{ maxWidth: '90%', wordBreak: 'break-word', width: 'fit-content' }} className={`w-max p-2 rounded ${item.sender === sellerId ? "bg-green-300 ml-auto  " : "bg-[#e18181]"} text-black h-min`}>
+                      <p>{item?.text}</p>
+                    </div>
+
+                    <p className="text-[12px] text-[#000000d3] pt-1">
+                      {format(item.createdAt)}
+                    </p>
+                  </div>
+              }
             </div>
-          ))}
+          </>
+        ))}
       </div>
 
       {/* send message input */}
       <form
-        aria-required={true}
+        aria-required='true'
         className="p-3 relative w-full flex justify-between items-center"
         onSubmit={sendMessageHandler}
       >
-        <div className="w-[30px]">
-          <input
-            type="file"
-            name=""
-            id="image"
-            className="hidden"
-            onChange={handleImageUpload}
-          />
-          <label htmlFor="image">
-            <TfiGallery className="cursor-pointer" size={20} />
-          </label>
+        <div className="w-[30px] ">
+          
+            {/* <MdEmojiEmotions  onClick={e=>setEmoji(val=> !val)} /> */}
+            {/* {
+              emoji && <EmojiPicker className=" absolute mt-5  cursor-pointer mr-2 w-[100%]" size={20} onClick={emojiClick} pickerStyle={{width: '100%'}} />
+            } */}
+            <input
+              type="file"
+              name=""
+              id="image"
+              className="hidden"
+              onChange={(e) => onFileChange(e)}
+            />
+            <label htmlFor="image">
+              <TfiGallery className="cursor-pointer" size={20} />
+            </label>
+          
         </div>
+        
         <div className="w-full">
           <input
             type="text"
             required
             placeholder="Enter your message..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             className={`${styles.input}`}
           />
           <input type="submit" value="Send" className="hidden" id="send" />
           <label htmlFor="send">
-            <AiOutlineSend
+            {
+              imgLoading === false && isError === false && <AiOutlineSend
               size={20}
               className="absolute right-4 top-5 cursor-pointer"
             />
+            }
           </label>
         </div>
       </form>
     </div>
   );
 };
+
+
+
+
+
 
 export default UserInbox;

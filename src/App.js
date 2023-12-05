@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   LoginPage, SignupPage, ActivationPage, HomePage, ProductsPage, BestSellingPage, EventsPage, FAQPages, TrackOrderPage,
   ProductDetailsPage, ProfilePage, ShopCreatePage, SellerActivationPage, ShopLoginPage, PaymentPage, OrderSuccessPage,
-  OrderDetailsPage, UserInbox, ProductSubcategoryPage
+  OrderDetailsPage, UserInbox, ProductSubcategoryPage, Birthday
 } from "./routes/Routes.js"
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -72,6 +72,7 @@ const App = ({ data }) => {
         <Route path='/products' element={<ProductsPage />} />
 
         <Route path='/productsss' element={<ProductSubcategoryPage />} />
+        <Route path='/product/birthday-gift' element={<Birthday />} />
 
 
         <Route path='/product/:id' element={<ProductDetailsPage />} />

@@ -16,6 +16,7 @@ const Categories = () => {
                             <div className='flex items-start  flex-wrap overflow-hidden' key={index}>
                                 <div className='flex pl-5'>
                                     {i.icon}
+                                    {console.log(i)}
                                 </div>
                                 <div className='px-3 overflow-hidden '>
                                     <p className='font-bold text-sm md:text-base '>

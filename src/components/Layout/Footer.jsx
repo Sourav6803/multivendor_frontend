@@ -16,7 +16,7 @@ import mainLogo from "../main_logo3.jpg"
 const Footer = () => {
   return (
     <div className="bg-[#000] text-white">
-      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7" style={{background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"}}>
+      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7" style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }}>
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
           <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
           <br />
@@ -35,7 +35,7 @@ const Footer = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
+      <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8  py-10 sm:text-center">
         <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
           <img
             src={mainLogo}
@@ -61,9 +61,13 @@ const Footer = () => {
           </div>
         </ul>
 
+
+      </div>
+
+      <div className="grid grid-cols-3 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8  sm:text-center">
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Company</h1>
-          {footerProductLinks.map((link,index) => (
+          {footerProductLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300
@@ -78,7 +82,7 @@ const Footer = () => {
 
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Shop</h1>
-          {footercompanyLinks.map((link,index) => (
+          {footercompanyLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300
@@ -93,7 +97,7 @@ const Footer = () => {
 
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Support</h1>
-          {footerSupportLinks.map((link,index) => (
+          {footerSupportLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300
@@ -111,7 +115,7 @@ const Footer = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10
          text-center pt-2 text-gray-400 text-sm pb-8"
       >
-        <span>© 2020 Becodemy. All rights reserved.</span>
+        <span>© 2023 Jamalpur BAZAAR. All rights reserved.</span>
         <span>Terms · Privacy Policy</span>
         <div className="sm:block flex items-center justify-center w-full">
           <img

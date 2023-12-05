@@ -1,8 +1,6 @@
 import { styled } from '@mui/material';
-import banner1 from "./upto50ff.jpg"
 
 import Carousel from 'react-multi-carousel';
-import { useNavigate } from 'react-router-dom';
 
 
 
@@ -30,18 +28,15 @@ const Image = styled('img')(({ theme }) => ({
     }
 }));
 
-const Banner = () => {
-
-    const navigate = useNavigate()
+const soumyaBanner = () => {
 
      const bannerData = [
-         { id: 1, url: "https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/up%20to%2050%25%20off.jpg", tags: "Birthday gift" },
-         { id: 2, url: 'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/img_2_1700580392749%5B1%5D.jpg',  },
-         { id: 3, url: 'https://sourav-ekart.s3.ap-south-1.amazonaws.com/abc/Big%20Sale%20on%20image.png' , tags: "Potrait" },
-         //{ id: 4, url: 'https://rukminim1.flixcart.com/flap/3376/560/image/f6202f13b6f89b03.jpg?q=50', shopId: "" }
+        { id: 1, url: 'https://img.freepik.com/free-psd/paint-draw-banner-template_23-2148516518.jpg?w=1060&t=st=1699579658~exp=1699580258~hmac=0ac7acb8908892bb795de69e5cce903a2219cea3d374743542280ab5fe934bf7', shopId: "653d07a19576c5beb8f13ca3" },
+        { id: 2, url: 'https://rukminim1.flixcart.com/flap/3376/560/image/57267a180af306fe.jpg?q=50', shopId: "653bd40414a4f73899732e0c" },
+        { id: 3, url: 'https://rukminim1.flixcart.com/flap/3376/560/image/ae9966569097a8b7.jpg?q=50' },
+        { id: 4, url: 'https://rukminim1.flixcart.com/flap/3376/560/image/f6202f13b6f89b03.jpg?q=50' }
     ]
 
-    
     return (
         <Carousel
             swipeable={false}
@@ -49,7 +44,7 @@ const Banner = () => {
             responsive={responsive}
             infinite={true}
             autoPlay={true}
-            autoPlaySpeed={3000}
+            autoPlaySpeed={4000}
             removeArrowOnDeviceType={["tablet", "mobile"]}
             keyBoardControl={true}
             showDots={true}
@@ -60,11 +55,11 @@ const Banner = () => {
         >
             {
                 bannerData.map(image => (
-                    <Image src={image.url} alt="banner" id={image?.shopId} key={image.id} onClick={e=>navigate(`/product/birthday-gift`)} />
+                    <Image src={image.url} alt="banner" id={image?.shopId} key={image.id} />
                 ))
             }
         </Carousel>
     )
 }
 
-export default Banner;
+export default soumyaBanner;

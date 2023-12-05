@@ -9,23 +9,55 @@ import styles from "../../styles/styles";
 import { TfiGallery } from "react-icons/tfi";
 import socketIO from "socket.io-client";
 import { format } from "timeago.js";
-//const ENDPOINT = "http://localhost:4000/";
+import { toast } from "react-toastify";
+import { newMessages, uploadFile } from "../../service/api";
+import { MdDownloadForOffline } from "react-icons/md";
+import { downloadMedia } from "../../utils/common-utils";
+import { LuCheckCheck } from "react-icons/lu";
+
 const ENDPOINT = "https://multivendor-socket.onrender.com"
+
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
+
 const DashboardMessages = () => {
-  const { seller,isLoading } = useSelector((state) => state.seller);
+  const { seller, isLoading } = useSelector((state) => state.seller);
   const [conversations, setConversations] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState();
   const [messages, setMessages] = useState([]);
   const [userData, setUserData] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [activeStatus, setActiveStatus] = useState(false);
-  const [images, setImages] = useState();
   const [open, setOpen] = useState(false);
+  const [newMessageFlag, setNewMessageFlag] = useState()
   const scrollRef = useRef(null);
+  
+
+  const [img, setImg] = useState('')
+  const [val, setVal] = useState()
+  const [fil, setFil] = useState()
+ 
+
+
+  const onFileChange = (e) => {
+    setVal(e.target.files[0].name);
+    setFil(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    const getImage = async () => {
+      if (fil ) {
+        const data = new FormData();
+        data.append("name", fil.name);
+        data.append("file", fil);
+
+        const response = await uploadFile(data);
+        setImg(response?.data);
+      }
+    }
+    getImage();
+  }, [fil])
 
   useEffect(() => {
     socketId.on("getMessage", (data) => {
@@ -38,28 +70,21 @@ const DashboardMessages = () => {
   }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && currentChat?.members?.includes(arrivalMessage?.sender) && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
     const getConversation = async () => {
       try {
         const resonse = await axios.get(
-          `${server}/conversation/get-all-conversation-seller/${seller?._id}`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        setConversations(resonse.data.conversations);
+          `${server}/conversation/get-all-conversation-seller/${seller?._id}`,{ withCredentials: true, });
+           setConversations(resonse.data.conversations);
       } catch (error) {
-        // console.log(error);
+        toast.error(error.message)
       }
     };
     getConversation();
-  }, [seller, messages]);
+  }, [seller]);
 
   useEffect(() => {
     if (seller) {
@@ -78,6 +103,8 @@ const DashboardMessages = () => {
     return online ? true : false;
   };
 
+ 
+
   // get messages
   useEffect(() => {
     const getMessage = async () => {
@@ -88,118 +115,49 @@ const DashboardMessages = () => {
         setMessages(response.data.messages);
       } catch (error) {
         console.log(error);
+        toast.error(error?.message)
       }
     };
     getMessage();
-  }, [currentChat]);
+  }, [currentChat, newMessageFlag, seller._id]);
 
-  // create new message
+
   const sendMessageHandler = async (e) => {
-    e.preventDefault();
-
-    const message = {
-      sender: seller._id,
-      text: newMessage,
-      conversationId: currentChat._id,
-    };
+    e.preventDefault()
+    let message = {};
+    if (!fil) {
+      message = {
+        sender: seller._id,
+        text: val,
+        conversationId: currentChat._id,
+        type: 'text',
+      };
+    } else {
+      message = {
+        sender: seller._id,
+        text: img,
+        conversationId: currentChat._id,
+        type: 'file',
+      };
+    }
 
     const receiverId = currentChat.members.find(
-      (member) => member.id !== seller._id
+      (member) => member !== seller?._id
     );
 
     socketId.emit("sendMessage", {
-      senderId: seller._id,
+      senderId: seller?._id,
       receiverId,
-      text: newMessage,
+      text: val,
     });
 
-    try {
-      if (newMessage !== "") {
-        await axios
-          .post(`${server}/message/create-new-message`, message)
-          .then((res) => {
-            setMessages([...messages, res.data.message]);
-            updateLastMessage();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    await newMessages(message)
 
-  const updateLastMessage = async () => {
-    socketId.emit("updateLastMessage", {
-      lastMessage: newMessage,
-      lastMessageId: seller._id,
-    });
-
-    await axios
-      .put(`${server}/conversation/update-last-message/${currentChat._id}`, {
-        lastMessage: newMessage,
-        lastMessageId: seller._id,
-      })
-      .then((res) => {
-        console.log(res.data.conversation);
-        setNewMessage("");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleImageUpload = async (e) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImages(reader.result);
-        imageSendingHandler(reader.result);
-      }
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const imageSendingHandler = async (e) => {
-    const receiverId = currentChat.members.find(
-      (member) => member !== seller._id
-    );
-
-    socketId.emit("sendMessage", {
-      senderId: seller._id,
-      receiverId,
-      images: e,
-    });
-
-    try {
-      await axios
-        .post(`${server}/message/create-new-message`, {
-          images: e,
-          sender: seller._id,
-          text: newMessage,
-          conversationId: currentChat._id,
-        })
-        .then((res) => {
-          setImages();
-          setMessages([...messages, res.data.message]);
-          updateLastMessageForImage();
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateLastMessageForImage = async () => {
-    await axios.put(
-      `${server}/conversation/update-last-message/${currentChat._id}`,
-      {
-        lastMessage: "Photo",
-        lastMessageId: seller._id,
-      }
-    );
+    setVal('');
+    setFil(null)  
+    setImg(' ');
+    setNewMessageFlag(prev => !prev);
+    
   };
 
   useEffect(() => {
@@ -207,7 +165,7 @@ const DashboardMessages = () => {
   }, [messages]);
 
   return (
-    <div className="w-[90%] bg-white m-5 h-[85vh] overflow-y-scroll rounded">
+    <div className="w-[90%] bg-white m-5 h-[90vh] overflow-y-scroll rounded">
       {!open && (
         <>
           <h1 className="text-center text-[30px] py-3 font-Poppins">
@@ -216,6 +174,7 @@ const DashboardMessages = () => {
           {/* All messages list */}
           {conversations &&
             conversations.map((item, index) => (
+            
               <MessageList
                 data={item}
                 key={index}
@@ -229,6 +188,7 @@ const DashboardMessages = () => {
                 setActiveStatus={setActiveStatus}
                 isLoading={isLoading}
               />
+              
             ))}
         </>
       )}
@@ -236,8 +196,6 @@ const DashboardMessages = () => {
       {open && (
         <SellerInbox
           setOpen={setOpen}
-          newMessage={newMessage}
-          setNewMessage={setNewMessage}
           sendMessageHandler={sendMessageHandler}
           messages={messages}
           sellerId={seller._id}
@@ -245,7 +203,9 @@ const DashboardMessages = () => {
           activeStatus={activeStatus}
           scrollRef={scrollRef}
           setMessages={setMessages}
-          handleImageUpload={handleImageUpload}
+          onFileChange={onFileChange}
+          value={val}
+          setValue={setVal}
         />
       )}
     </div>
@@ -263,7 +223,7 @@ const MessageList = ({
   setActiveStatus,
   isLoading
 }) => {
-  console.log(data);
+
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const handleClick = (id) => {
@@ -273,24 +233,28 @@ const MessageList = ({
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const userId = data.members.find((user) => user != me);
+    const userId = data.members.find((user) => user !== me);
 
     const getUser = async () => {
       try {
         const res = await axios.get(`${server}/user/user-info/${userId}`);
         setUser(res.data.user);
       } catch (error) {
+        toast.error(error.message)
         console.log(error);
       }
     };
     getUser();
   }, [me, data]);
 
+ 
+
+
+  const msgLength = data.lastMessage?.length >= 10 ? data.lastMessage.slice(0, 10) + "..." : data.lastMessage
+
   return (
     <div
-      className={`w-full flex p-3 px-3 ${
-        active === index ? "bg-[#00000010]" : "bg-transparent"
-      }  cursor-pointer`}
+      className={`w-full flex p-3 px-3 ${active === index ? "bg-[#00000010]" : "bg-transparent"}  cursor-pointer`}
       onClick={(e) =>
         setActive(index) ||
         handleClick(data._id) ||
@@ -301,8 +265,8 @@ const MessageList = ({
     >
       <div className="relative">
         <img
-          src={`${user?.avatar?.url}`}
-          alt=""
+          src={`${user?.avatar}`}
+          alt="user"
           className="w-[50px] h-[50px] rounded-full"
         />
         {online ? (
@@ -317,7 +281,7 @@ const MessageList = ({
           {!isLoading && data?.lastMessageId !== user?._id
             ? "You:"
             : user?.name?.split(" ")[0] + ": "}{" "}
-          {data?.lastMessage}
+          {(/\.(gif|jpg|jpeg|tiff|png)$/i).test(data.lastMessage) ? "Photo" : msgLength}
         </p>
       </div>
     </div>
@@ -327,28 +291,30 @@ const MessageList = ({
 const SellerInbox = ({
   scrollRef,
   setOpen,
-  newMessage,
-  setNewMessage,
   sendMessageHandler,
   messages,
   sellerId,
   userData,
   activeStatus,
-  handleImageUpload,
+  onFileChange,
+  value,
+  setValue
+
 }) => {
+
   return (
     <div className="w-full min-h-full flex flex-col justify-between">
       {/* message header */}
-      <div className="w-full flex p-3 items-center justify-between bg-slate-200">
+      <div className="w-full flex p-3 items-center justify-between bg-green-500">
         <div className="flex">
           <img
-            src={`${userData?.avatar?.url}`}
+            src={`${userData?.avatar}`}
             alt=""
             className="w-[60px] h-[60px] rounded-full"
           />
           <div className="pl-3">
-            <h1 className="text-[18px] font-[600]">{userData?.name}</h1>
-            <h1>{activeStatus ? "Active Now" : ""}</h1>
+            <h1 className="text-[18px] font-[400] text-white">{userData?.name}</h1>
+            <p className="text-[14px] text-white">{activeStatus ? "Active Now" : "Offline"}</p>
           </div>
         </div>
         <AiOutlineArrowRight
@@ -359,44 +325,47 @@ const SellerInbox = ({
       </div>
 
       {/* messages */}
-      <div className="px-3 h-[65vh] py-3 overflow-y-scroll">
-        {messages &&
-          messages.map((item, index) => {
+      <div className=" relative px-3 h-[65vh] py-3 overflow-y-scroll" style={{ backgroundImage: "url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
+        {messages && messages.map((item, index) => {
             return (
-              <div
-                className={`flex w-full my-2 ${
-                  item.sender === sellerId ? "justify-end" : "justify-start"
-                }`}
-                ref={scrollRef}
-              >
-                {item.sender !== sellerId && (
-                  <img
-                    src={`${userData?.avatar?.url}`}
-                    className="w-[40px] h-[40px] rounded-full mr-3"
-                    alt=""
-                  />
-                )}
-                {item.images && (
-                  <img
-                    src={`${item.images?.url}`}
-                    className="w-[300px] h-[300px] object-cover rounded-[10px] mr-2"
-                  />
-                )}
-                {item.text !== "" && (
-                  <div>
-                    <div
-                      className={`w-max p-2 rounded ${
-                        item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
-                      } text-[#fff] h-min`}
-                    >
-                      <p>{item.text}</p>
-                    </div>
+              <div className={`flex w-full my-2 ${item.sender === sellerId ? "justify-end" : "justify-start"}`} ref={scrollRef}  key={index}>
+                {
+                  item?.type === 'file' ?
 
-                    <p className="text-[12px] text-[#000000d3] pt-1">
-                      {format(item.createdAt)}
-                    </p>
-                  </div>
-                )}
+                    <div>
+                      <div style={{position: "relative"}}>
+                        <img
+                          src={`${item.text}`}
+                          className="w-[200px] h-[200px] object-cover rounded-[10px] mr-2"
+                          alt=""
+                        />
+                        {
+                          item.sender !== sellerId ? <div style={{ position: 'absolute', bottom: 0, right: 0, cursor: 'pointer' }}>
+                          <MdDownloadForOffline size={30} style={{ marginRight: 10, border: '1px solid grey', borderRadius: '50%', }} fontSize='large' onClick={(e) => downloadMedia(e,item.text)} />
+                        </div>: ''
+                        }
+                      </div>
+                      <p className="text-[12px] text-[#000000d3] pt-1 text-end ">
+                        {format(item.createdAt)}
+                      </p>
+                    </div>
+                    :
+                    <div>
+                      <div
+                        style={{ maxWidth: '90%', wordBreak: 'break-word', width: 'fit-content' }} className={`w-max p-2 rounded ${item.sender === sellerId ? "bg-green-300 ml-auto" : "bg-[#e18181]"
+                          } text-black h-min`}
+                      >
+                        <p>{item.text}</p>
+                      </div>
+
+                      <p className="text-[12px] text-[#000000d3] pt-1">
+                        {format(item.createdAt)}
+                      </p>
+                    </div>
+                }
+
+
+
               </div>
             );
           })}
@@ -414,7 +383,7 @@ const SellerInbox = ({
             name=""
             id="image"
             className="hidden"
-            onChange={handleImageUpload}
+            onChange={onFileChange}
           />
           <label htmlFor="image">
             <TfiGallery className="cursor-pointer" size={20} />
@@ -425,8 +394,8 @@ const SellerInbox = ({
             type="text"
             required
             placeholder="Enter your message..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
+            value={value}
             className={`${styles.input}`}
           />
           <input type="submit" value="Send" className="hidden" id="send" />

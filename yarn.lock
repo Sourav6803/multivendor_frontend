@@ -4526,6 +4526,11 @@
   "resolved" "https://registry.npmjs.org/emittery/-/emittery-0.8.1.tgz"
   "version" "0.8.1"
 
+"emoji-picker-react@^4.5.16":
+  "integrity" "sha512-RXaOH1EapmqbtRSMaHnwJWMfA6kiPipg/gN4cFOQRQKvrTQIA3K5+yUyzFuq8O7umIEtXUi1C1tf2dPvyyn44Q=="
+  "resolved" "https://registry.npmjs.org/emoji-picker-react/-/emoji-picker-react-4.5.16.tgz"
+  "version" "4.5.16"
+
 "emoji-regex@^8.0.0":
   "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
   "resolved" "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz"
@@ -8678,6 +8683,11 @@
     "json2mq" "^0.2.0"
     "lodash.debounce" "^4.0.8"
     "resize-observer-polyfill" "^1.5.0"
+
+"react-spinners@^0.13.8":
+  "integrity" "sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA=="
+  "resolved" "https://registry.npmjs.org/react-spinners/-/react-spinners-0.13.8.tgz"
+  "version" "0.13.8"
 
 "react-toastify@^9.1.3":
   "integrity" "sha512-fPfb8ghtn/XMxw3LkxQBk3IyagNpF/LIKjOBflbexr2AWxAH1MJgvnESwEwBn9liLFXgTKWgBSdZpw9m4OTHTg=="

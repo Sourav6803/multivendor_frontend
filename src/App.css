@@ -42,3 +42,14 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.EmojiPickerReact{
+  position: relative;
+  width: 300px;
+  height: 50px;
+}
+
+.picker-container{
+  position: relative;
+  width: 300px;
+}

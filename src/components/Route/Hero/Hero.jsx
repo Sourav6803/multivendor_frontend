@@ -1,15 +1,11 @@
 import React, {  useState } from 'react';
 import styles from '../../../styles/styles';
 import { Link } from 'react-router-dom';
-
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllProductsShop } from '../../../redux/actions/product';
+import {  useSelector } from 'react-redux';
 import Navbar from '../Navbar/Navbar';
 
-import Carousel from 'react-multi-carousel'
 import Banner from './Banner';
 
 const Hero = () => {

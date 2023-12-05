@@ -35,6 +35,8 @@ const ProductDetails = ({ data }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+     console.log(data)
+
 
 
     useEffect(() => {
@@ -85,7 +87,7 @@ const ProductDetails = ({ data }) => {
 
     const handleMessageSubmit = async () => {
         if (isAuthenticated) {
-            const groupTitle = data?._id + user?._id;
+            const groupTitle = data?.name;
             const userId = user?._id;
             const sellerId = data?.shop._id;
             await axios
@@ -116,7 +118,7 @@ const ProductDetails = ({ data }) => {
         <div className='bg-white '>
             {
                 data ? (
-                    <div className={`${styles.section} w-[90%] 80px:w-[80%] `}>
+                    <div className={`${styles.section} w-[100%] 80px:w-[80%] `}>
                         <div className='w-full py-5'>
                             <div className='block w-full 800px:flex'>
                                 <div className='w-full 800px:w-[50%] '>
@@ -136,7 +138,7 @@ const ProductDetails = ({ data }) => {
                                     {
                                         data && data?.images?.length && (
                                             <Carousel showArrows={true} autoPlay infiniteLoop>
-                                                {data.images && data.images.map((img, index)=> <img src={img} alt={data?.title} key={index} />)}
+                                                {data?.images && data.images.map((img, index)=> <img src={img} alt={data?.title} key={index} />)}
                                             </Carousel>
                                         )
                                     }
@@ -145,7 +147,6 @@ const ProductDetails = ({ data }) => {
 
                                 <div className='w-full 800px:w-[50%] ml-1'>
                                     <h1 className={`${styles.productTitle} mt-3 !text-[14px]`}>{data.name}</h1>
-
 
                                     <h3 className={`${styles.shop_name} pb-1 pt-1 `}>
                                         <span className='text-black'>Seller:</span> <Link to={`/shop/preview/${data?.shop._id}`}>{data?.shop?.name}</Link>

@@ -45,13 +45,14 @@ import { useNavigate } from 'react-router-dom';
 const Component = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '55px 130px 0 130px !important',
+    //margin: '55px 130px 0 130px !important',
     overflowX: 'overlay',
+    
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '91.6667%',
+    width: 'full',
     [theme.breakpoints.down('lg')]: {
-        marginTop: '15px  !important',
+        marginTop: ' !important',
         marginLeft: '0 !important'
     }
 }))
@@ -93,7 +94,7 @@ const Navbar = () => {
                     
                     <Container key={index}>
                         <Image src={temp.image_Url} style={{  width: 100 , height: 50 }}  alt=''  key={index}  onClick={() => handleSubmit(temp)}/>
-                        <Text>{temp.title.length > 6 ? temp.title.slice(0,6) : temp.title}..</Text>
+                        <Text>{temp.title.length > 6 ? temp.title.slice(0,5) : temp.title}..</Text>
                     </Container>
                     
                 ))

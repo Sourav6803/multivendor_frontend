@@ -15,6 +15,7 @@ import Wishlist from '../Wishlist/Wishlist';
 import { RxCross1 } from 'react-icons/rx';
 import mainLogo from "../main_logo3.jpg"
 import Logo from "./Jamalpur BAZAR-logos__white.png"
+import { IoIosHeart } from "react-icons/io";
 
 
 
@@ -32,7 +33,8 @@ const Header = ({ activeHeading }) => {
     const [openWishlist, setOpenWishlist] = useState(false)
     const [open, setOpen] = useState(false)
     const { cart } = useSelector(state => state?.cart)
-
+     
+   
 
     const handleSearchChange = (e) => {
         const term = e.target.value
@@ -170,10 +172,10 @@ const Header = ({ activeHeading }) => {
 
             <div className={` ${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null} w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`} style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }} >
                 <div className='w-full flex items-center justify-between ' >
-                    <div className="">
-                        <BiMenuAltLeft size={40} className="ml-4" onClick={() => setOpen(true)} />
+                    <div className="" >
+                        <BiMenuAltLeft size={40} className="ml-4 " onClick={() => setOpen(true)} />
                     </div>
-                    <div className='ml-[-200px]'>
+                    <div className='ml-[-230px]'>
                         <Link to="/">
                             <img
                                 src={Logo}
@@ -181,13 +183,14 @@ const Header = ({ activeHeading }) => {
                                 className=" items-start cursor-pointer "
                                 height={40}
                                 width={50}
+                                
                             />
                             {/* <p>Jamalpur BAZAAR</p> */}
                         </Link>
                     </div>
                     <div >
                         <div className="relative mr-[20px]" onClick={() => setOpenCart(true)}>
-                            <AiOutlineShoppingCart size={30} />
+                            <AiOutlineShoppingCart size={30} color='white' />
                             <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                                 {cart && cart?.length}
                             </span>
@@ -210,11 +213,14 @@ const Header = ({ activeHeading }) => {
                                 <div className='w-full justify-between flex pr-3 '>
                                     <div>
                                         <div className='relative mr-[15px] ' onClick={()=>setOpenWishlist(true)}>
-                                            <AiOutlineHeart size={30} className='mt-5 ml-3' />
-                                            <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
+                                            <IoIosHeart size={30} className='mt-5 ml-3 ' color='red' />
+                                            <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-3 h-3 top right p-0 m-0 text-white font-mono text-[10px]  leading-tight text-center">
                                                 {cart && cart?.length}
                                             </span>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <p className='mt-5'>Welcome, {user?.name}</p>
                                     </div>
                                     <RxCross1 size={30} className='mt-5 ml-4' onClick={() => setOpen(false)} />
                                 </div>
@@ -230,10 +236,6 @@ const Header = ({ activeHeading }) => {
                                         searchData && searchData?.length !== 0 ? (
                                             <div className='absolute  bg-slate-50 shadow w-full z-10 left-0 p-3'>
                                                 {searchData && searchData?.map((i, index) => {
-
-                                                    const d = i?.name
-                                                    
-                                                    const Product_Name = d.replace(/\s+/g, "-")
                                                     return (
                                                         <Link to={`/product/${i?._id}`} >
                                                             <div key={index} className='w-full flex items-start py-3'>

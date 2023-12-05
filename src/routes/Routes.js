@@ -17,6 +17,8 @@ import OrderDetailsPage from "../pages/OrderDetailsPage.jsx";
 import TrackOrderPage from "../pages/TrackOrderPage.jsx";
 import UserInbox from "../pages/UserInbox.jsx";
 import ProductSubcategoryPage from "../pages/PoductSubcategoryPage.jsx";
+import Birthday from "../components/Other/Birthday.jsx";
+
 
 
 
@@ -43,5 +45,6 @@ export {
     OrderDetailsPage,
     TrackOrderPage,
     UserInbox,
-    ProductSubcategoryPage
+    ProductSubcategoryPage,
+    Birthday
 }

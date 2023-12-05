@@ -17,7 +17,7 @@ const SuggestedProduct = ({data}) => {
     <div>
         {
             data ? (
-                <div className={`p-4 ${styles.section} !bg-[#d85de3] `} style={{backgroundImage: "https://media.istockphoto.com/id/1180447175/vector/rangoli-dark-red-maroon-colored-grunge-background-diwali-greeting-with-one-small-diya-at-the.jpg?s=2048x2048&w=is&k=20&c=f7wcjVwr8LK45i26-wI7TuHTVeUEylfDN36IXhqq5fM=" , backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
+                <div className={`p-4 ${styles.section} !w-full !bg-[#d85de3] `} style={{backgroundImage: "https://media.istockphoto.com/id/1180447175/vector/rangoli-dark-red-maroon-colored-grunge-background-diwali-greeting-with-one-small-diya-at-the.jpg?s=2048x2048&w=is&k=20&c=f7wcjVwr8LK45i26-wI7TuHTVeUEylfDN36IXhqq5fM=" , backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
                     <p className={` text-[14px] font-[500] border-b mb-5 `}>
                         Suggested Products 
                     </p>
