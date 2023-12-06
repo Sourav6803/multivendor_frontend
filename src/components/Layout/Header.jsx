@@ -220,7 +220,9 @@ const Header = ({ activeHeading }) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <p className='mt-5'>Welcome, {user?.name}</p>
+                                        {
+                                            user && <p className='mt-5'>Welcome, {user?.name}</p>
+                                        }
                                     </div>
                                     <RxCross1 size={30} className='mt-5 ml-4' onClick={() => setOpen(false)} />
                                 </div>
