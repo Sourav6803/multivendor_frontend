@@ -584,10 +584,10 @@ const Address = () => {
   };
 
   return (
-    <div className="w-full px-5">
+    <div className="w-full 800px:flex block pb-3">
       {open && (
         <div className="fixed w-full h-screen bg-[#0000004b] top-0 left-0 flex items-center justify-center ">
-          <div className="w-[35%] h-[80vh] bg-white rounded shadow relative overflow-y-scroll">
+          <div className="w-[85%] h-[80vh] bg-white rounded shadow relative overflow-y-scroll">
             <div className="w-full flex justify-end p-3">
               <RxCross1
                 size={30}
@@ -598,7 +598,7 @@ const Address = () => {
             <h1 className="text-center text-[25px] font-Poppins">
               Add New Address
             </h1>
-            <div className="w-full">
+            <div className="w-full 800px:w-[70%]  pb-3">
               <form aria-required onSubmit={handleSubmit} className="w-full">
                 <div className="w-full block p-4">
                   <div className="w-full pb-2">
@@ -712,7 +712,7 @@ const Address = () => {
                   <div className=" w-full pb-2">
                     <input
                       type="submit"
-                      className={`${styles.input} mt-5 cursor-pointer`}
+                      className={`${styles.input} mt-5 cursor-pointer bg-black text-white`}
                       required
                       readOnly
                     />
@@ -724,7 +724,7 @@ const Address = () => {
         </div>
       )}
       <div className="flex w-full items-center justify-between">
-        <h1 className="text-[25px] font-[600] text-[#000000ba] pb-2">
+        <h1 className="text-[25px] font-[600] text-[#000000ba] pb-2 ml-1">
           My Addresses
         </h1>
         <div
