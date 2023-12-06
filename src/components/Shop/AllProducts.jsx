@@ -1,6 +1,7 @@
 // import { Button } from "@material-ui/core";
 import Button from '@mui/material/Button'
 import { DataGrid } from "@material-ui/data-grid";
+
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +13,8 @@ import Loader from "../Layout/Loader";
 
 const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state?.products);
-  
- 
+
+
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
@@ -28,38 +29,48 @@ const AllProducts = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
+    {
+      field: "id",
+      headerName: "Product Id",
+      minWidth: 150,
+      border: 'red',
+      flex: 0.7
+    },
     {
       field: "name",
       headerName: "Name",
-      minWidth: 180,
+      minWidth: 150,
       flex: 1.4,
+      border: 'red',
     },
     {
       field: "price",
       headerName: "Price",
-      minWidth: 100,
-      flex: 0.6,
+      minWidth: 120,
+      flex: 0.4,
+
     },
     {
       field: "Stock",
       headerName: "Stock",
-      type: "number",
-      minWidth: 80,
+      // type: "number",
+      // minWidth: 150,
       flex: 0.5,
+      type: 'number',
+      minWidth: 130,
     },
 
     {
       field: "sold",
-      headerName: "Sold out",
+      headerName: "Sold_out",
       type: "number",
-      minWidth: 130,
+      minWidth: 180,
       flex: 0.6,
     },
     {
       field: "Preview",
       flex: 0.8,
-      minWidth: 100,
+      minWidth: 160,
       headerName: "",
       type: "number",
       sortable: false,
@@ -112,9 +123,9 @@ const AllProducts = () => {
       {isLoading === true ? (
         <Loader />
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white">
-          
-          
+        <div className="w-full mx-2 pt-1 mt-5 bg-gray-200">
+
+
           <DataGrid
             rows={row}
             columns={columns}

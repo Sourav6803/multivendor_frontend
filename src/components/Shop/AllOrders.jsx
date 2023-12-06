@@ -19,7 +19,7 @@ const AllOrders = () => {
   }, [dispatch]);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7, },
 
     {
       field: "status",
@@ -86,7 +86,7 @@ const AllOrders = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white">
+        <div className="w-full mx-2 pt-1 mt-5 bg-gray-200">
           <DataGrid
             rows={row}
             columns={columns}

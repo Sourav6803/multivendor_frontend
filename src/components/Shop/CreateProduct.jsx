@@ -14,7 +14,6 @@ const CreateProduct = () => {
     const {isLoading, success, error } = useSelector((state) => state.products);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const [images, setImages] = useState([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -35,7 +34,6 @@ const CreateProduct = () => {
     };
 
     const handleSubmit = (e) => {
-
         e.preventDefault();
         setLoading(true)
         const newForm = new FormData();
@@ -77,8 +75,8 @@ const CreateProduct = () => {
 
 
     return (
-        <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[100vh] rounded-[4px] p-3 overflow-y-scroll border border-red-500">
-            <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
+        <div className="w-[95%] 800px:w-[50%] bg-white  shadow h-auto rounded-[4px] p-1 overflow-y-scroll border border-blue-500">
+            <h5 className="text-[24px] font-Poppins text-center">Create Product</h5>
             {/* create product form */}
             
                 
@@ -105,9 +103,9 @@ const CreateProduct = () => {
                         Description <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                        cols="30"
+                        cols="20"
                         required
-                        rows="8"
+                        rows="3"
                         type="text"
                         name="description"
                         value={description}
@@ -233,8 +231,8 @@ const CreateProduct = () => {
                 </div>
                 <br />
 
-                <div>
-                    <button className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm " >
+                <div className="flex justify-center">
+                    <button className="mt-2 cursor-pointer appearance-none text-center text-white block w-[70%] px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-blue-600 " >
                         Create
                     </button>
 
